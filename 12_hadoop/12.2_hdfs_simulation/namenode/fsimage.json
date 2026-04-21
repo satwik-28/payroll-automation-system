@@ -1,0 +1,282 @@
+{
+  "files": {
+    "/payroll/raw/employees.csv": {
+      "size_bytes": 76,
+      "blocks": 1,
+      "block_ids": [
+        "44826ce6a624"
+      ],
+      "replication": 3,
+      "datanodes": [
+        "DN1",
+        "DN2",
+        "DN3"
+      ],
+      "created": "2026-04-21T12:41:45.089481",
+      "checksum": "8f2f09f1f371a574e15eb78ffe26f384"
+    },
+    "/payroll/raw/payroll_mar2026.csv": {
+      "size_bytes": 62,
+      "blocks": 1,
+      "block_ids": [
+        "48b171ba25a3"
+      ],
+      "replication": 3,
+      "datanodes": [
+        "DN1",
+        "DN2",
+        "DN3"
+      ],
+      "created": "2026-04-21T12:41:45.107616",
+      "checksum": "4d797f93e4abc47f29890a8118f6440d"
+    },
+    "/payroll/processed/cleaned_payroll.csv": {
+      "size_bytes": 58,
+      "blocks": 1,
+      "block_ids": [
+        "c440ee6454da"
+      ],
+      "replication": 3,
+      "datanodes": [
+        "DN1",
+        "DN2",
+        "DN3"
+      ],
+      "created": "2026-04-21T12:41:45.124293",
+      "checksum": "733f2e5b7eb9c87d6c112e79c255624b"
+    },
+    "/logs/pipeline_2026.log": {
+      "size_bytes": 100,
+      "blocks": 1,
+      "block_ids": [
+        "ffc0f1385b92"
+      ],
+      "replication": 3,
+      "datanodes": [
+        "DN1",
+        "DN2",
+        "DN3"
+      ],
+      "created": "2026-04-21T12:41:45.138695",
+      "checksum": "2f4be2f3c4074c6742f0b3ec79c419ac"
+    },
+    "/payroll/archive/payroll_2025.tar.gz": {
+      "size_bytes": 320,
+      "blocks": 3,
+      "block_ids": [
+        "36c628389f7b",
+        "dc2490140d92",
+        "9a6959aa72ae"
+      ],
+      "replication": 3,
+      "datanodes": [
+        "DN1",
+        "DN2",
+        "DN3"
+      ],
+      "created": "2026-04-21T12:41:45.149576",
+      "checksum": "0dd9f3024d76cf0f570f2d53f07466cf"
+    },
+    "/payroll/2026/march/payroll_register.csv": {
+      "size_bytes": 588,
+      "blocks": 5,
+      "block_ids": [
+        "01625ae6b08d",
+        "6430a62380db",
+        "bfedb0a6ee09",
+        "6cce76a83cba",
+        "36ca3673f218"
+      ],
+      "replication": 3,
+      "datanodes": [
+        "DN1",
+        "DN2",
+        "DN3"
+      ],
+      "created": "2026-04-21T12:41:43.790191",
+      "checksum": "607614159ced2481bba008d74f259f5c"
+    },
+    "/payroll/2026/march/payslips_batch.tar": {
+      "size_bytes": 3800,
+      "blocks": 30,
+      "block_ids": [
+        "0bf5ac43c628",
+        "583ad27d2729",
+        "024a83769f02",
+        "0b246cc9be03",
+        "b0d71dae662a",
+        "2843bc6c72c9",
+        "dcc04a6390fb",
+        "5b2cb695fdfa",
+        "cde8a3feee92",
+        "4fab1fcfa27f",
+        "a3fedd9e3beb",
+        "15f16d827fab",
+        "e7650d0d3057",
+        "6ac65ab7f145",
+        "06d5ee5885d5",
+        "64e233f56a76",
+        "454b200ce272",
+        "478a4015a179",
+        "afba3a1883e3",
+        "ce5e69de077b",
+        "757066d21b46",
+        "0d534674046d",
+        "d5c5f1f4f6b5",
+        "5b002aeef861",
+        "7a8c55156f13",
+        "93b633bfe433",
+        "390b4b561522",
+        "74760bb76444",
+        "c87a5ead2d54",
+        "a356028f01f3"
+      ],
+      "replication": 3,
+      "datanodes": [
+        "DN1",
+        "DN2",
+        "DN3"
+      ],
+      "created": "2026-04-21T12:41:43.822596",
+      "checksum": "f18ec99d8cc196266d7e0ca43619c62b"
+    },
+    "/payroll/archive/2025/annual_report.parquet": {
+      "size_bytes": 9500,
+      "blocks": 75,
+      "block_ids": [
+        "0a5adfd6d8e7",
+        "195857d0bbdc",
+        "d8d63a22e6a3",
+        "82e7d8d551a8",
+        "8fd96139a4c2",
+        "4fb57c2538dd",
+        "289d789a0ea3",
+        "0930490449c9",
+        "c62cb3064da0",
+        "6403006d96a6",
+        "f6f22e065c2b",
+        "9d5f909a6648",
+        "282e005b4a25",
+        "11f4df30b56f",
+        "1c338fcac7c3",
+        "f03af01e85f2",
+        "0fac6fa94444",
+        "4202a07d138f",
+        "3a67fb28d498",
+        "d7f467713941",
+        "e9e50d444bfb",
+        "c8b4e5bc1061",
+        "66e2f4ceec78",
+        "fd882977d985",
+        "5c422bae8bd4",
+        "1c1fcda80a00",
+        "338f18040e71",
+        "47484fff3621",
+        "90ab9ddd8f54",
+        "a5a60ad23a3d",
+        "71cd0967ddf0",
+        "61b1e08dfd0e",
+        "2f451ebe51c8",
+        "0c171a52889e",
+        "fd4c0171873a",
+        "64d077473fa4",
+        "1c74d6cc3c52",
+        "151c53c75d28",
+        "ad1c1153a121",
+        "deb8ada6ed2a",
+        "97b1d02cf3af",
+        "a8b9773a49e7",
+        "34c4778cdaa5",
+        "728ea37f665d",
+        "86bf468d7916",
+        "d803ac10cb85",
+        "0648f5ec1894",
+        "357c813e05dc",
+        "bb8789eab52c",
+        "587cc5cbb63c",
+        "208fa0b9128c",
+        "aba785102ed0",
+        "0bf476a85c62",
+        "1494a1055d1e",
+        "f7ac7417f904",
+        "6b6bdd51d327",
+        "67f8d745eb70",
+        "c0f41c0975ea",
+        "8e16965b2712",
+        "03b1340a7806",
+        "56272877fc76",
+        "1a2457c24dbd",
+        "5ff8777cdb38",
+        "27353787d037",
+        "4dd6b778d19c",
+        "003334154568",
+        "d925f5fb5c36",
+        "f4f75da916e5",
+        "fa93e23a0c55",
+        "dadac11cbef9",
+        "d14f73281158",
+        "e0e3a0e47540",
+        "34ec84cb0809",
+        "ad7987a1aed0",
+        "638f125b70c2"
+      ],
+      "replication": 3,
+      "datanodes": [
+        "DN1",
+        "DN2",
+        "DN3"
+      ],
+      "created": "2026-04-21T12:41:44.000943",
+      "checksum": "e6418ac0aed4819ba658edf940966bea"
+    },
+    "/hdfs_logs/namenode_audit.log": {
+      "size_bytes": 1260,
+      "blocks": 10,
+      "block_ids": [
+        "9b4d369f5a2d",
+        "4479412c5830",
+        "b9f6ea2cfede",
+        "479a56061129",
+        "2b47aa6a3cae",
+        "077976028fd3",
+        "4c236bff6b12",
+        "c5b6d6143ee6",
+        "b518a7dfe105",
+        "991e16a817b1"
+      ],
+      "replication": 3,
+      "datanodes": [
+        "DN1",
+        "DN2",
+        "DN3"
+      ],
+      "created": "2026-04-21T12:41:44.407809",
+      "checksum": "a7c6c8488f354e4437a62ad422cd0983"
+    }
+  },
+  "directories": {
+    "/": {
+      "created": "2026-04-21T12:41:43.570392"
+    },
+    "/payroll": {
+      "created": "2026-04-21T12:41:45.062762"
+    },
+    "/payroll/raw": {
+      "created": "2026-04-21T12:41:45.065749"
+    },
+    "/payroll/processed": {
+      "created": "2026-04-21T12:41:45.069226"
+    },
+    "/payroll/archive": {
+      "created": "2026-04-21T12:41:45.072605"
+    },
+    "/logs": {
+      "created": "2026-04-21T12:41:45.077311"
+    },
+    "/user/payroll_admin": {
+      "created": "2026-04-21T12:41:45.077311"
+    }
+  },
+  "total_blocks": 155,
+  "total_size": 18228
+}
