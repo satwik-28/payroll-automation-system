@@ -1,0 +1,11 @@
+emp_id,emp_code,full_name,gender,dept_name,dept_location,designation,emp_status,period,working_days,days_present,basic,hra,da,gross,pf,tds,net,pay_status,days_absent,overtime_hrs,late_arrivals,take_home_pct,attendance_pct
+1,EMP001,Rajesh Kumar,Male,Human Resources,Mumbai,HR Executive,Active,Jan-2026,27,25,45000.0,13500.0,7650.0,67650.0,1800.0,0.0,65850.0,Paid,2,4.0,2.0,97.3,92.6
+2,EMP002,Priya Sharma,Female,Human Resources,Mumbai,HR Manager,Active,Jan-2026,27,27,125000.0,50000.0,22500.0,202500.0,1800.0,25500.0,175200.0,Paid,0,0.0,0.0,86.5,100.0
+3,EMP003,Amit Patel,Male,Information Technology,Bengaluru,Software Engineer,Active,Jan-2026,27,26,65000.0,19500.0,11050.0,96850.0,1800.0,5600.0,89450.0,Paid,1,6.0,1.0,92.4,96.3
+4,EMP004,Sneha Reddy,Female,Customer Support,Hyderabad,HR Executive,Active,Jan-2026,27,27,30000.0,3000.0,4500.0,37500.0,1800.0,0.0,35700.0,Paid,0,0.0,0.0,95.2,100.0
+5,EMP005,Vikram Singh,Male,Sales & Marketing,Delhi,Sales Executive,Active,Jan-2026,27,25,38000.0,7600.0,6460.0,53460.0,1800.0,0.0,51660.0,Paid,2,0.0,3.0,96.6,92.6
+6,EMP006,Ananya Iyer,Female,Finance & Accounts,Mumbai,Accounts Executive,Unknown,Jan-2026,27,24,28000.0,2800.0,4200.0,34200.0,1800.0,0.0,32400.0,Paid,3,0.0,2.0,94.7,88.9
+7,EMP007,Rohit Gupta,Male,Information Technology,Bengaluru,Senior SWE,Active,Jan-2026,27,27,88000.0,33440.0,15840.0,136400.0,1800.0,5200.0,129400.0,Draft,0,0.0,0.0,94.9,100.0
+8,EMP008,Kavitha Menon,Female,Data Science,Bengaluru,Data Scientist,Active,Jan-2026,27,26,72000.0,21600.0,12240.0,107640.0,1800.0,3500.0,102340.0,Paid,1,8.0,0.0,95.1,96.3
+9,EMP009,Sanjay Nair,Male,Operations,Pune,Ops Analyst,Inactive,Jan-2026,27,20,44000.0,13200.0,7480.0,65000.0,1800.0,0.0,63200.0,Paid,7,0.0,5.0,97.2,74.1
+10,EMP010,Deepa Joshi,Female,Research & Development,Bengaluru,Research Scientist,Active,Jan-2026,27,27,95000.0,38000.0,17100.0,151300.0,1800.0,14400.0,135100.0,Paid,0,12.0,0.0,89.3,100.0

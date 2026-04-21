@@ -1,0 +1,42 @@
+{
+  "total_employees": 10,
+  "total_gross": 952500.0,
+  "total_net": 880300.0,
+  "avg_gross": 95250.0,
+  "avg_net": 88030.0,
+  "avg_attendance_pct": 94.1,
+  "dept_breakdown": {
+    "Human Resources": {
+      "count": 2,
+      "avg_net": 120525.0
+    },
+    "Information Technology": {
+      "count": 2,
+      "avg_net": 109425.0
+    },
+    "Customer Support": {
+      "count": 1,
+      "avg_net": 35700.0
+    },
+    "Sales & Marketing": {
+      "count": 1,
+      "avg_net": 51660.0
+    },
+    "Finance & Accounts": {
+      "count": 1,
+      "avg_net": 32400.0
+    },
+    "Data Science": {
+      "count": 1,
+      "avg_net": 102340.0
+    },
+    "Operations": {
+      "count": 1,
+      "avg_net": 63200.0
+    },
+    "Research & Development": {
+      "count": 1,
+      "avg_net": 135100.0
+    }
+  }
+}

@@ -1,0 +1,11 @@
+emp_id,emp_code,first_name,last_name,dept,designation,basic_salary,gender,dob,email,date_joined,status
+1,EMP001,Rajesh,Kumar,HR,HR Executive,45000,Male,1985-03-15,rajesh.kumar@pw.in,2018-06-01,Active
+2,EMP002,Priya,Sharma,HR,HR Manager,125000,Female,1990-07-22,priya.sharma@pw.in,2016-03-15,Active
+3,EMP003,Amit,Patel,IT,Software Engineer,65000,Male,1988-11-08,amit.patel@pw.in,2019-09-01,Active
+4,EMP004,Sneha,Reddy,Support,HR Executive,30000,Female,,sneha.reddy@pw.in,2021-01-10,Active
+5,EMP005,Vikram,Singh,Sales,Sales Executive,,Male,1983-12-19,,2017-08-20,Active
+6,EMP006,Ananya,Iyer,Finance,Accounts Executive,28000,Female,1994-06-14,ananya.iyer@pw.in,2022-03-01,
+7,EMP007,Rohit,Gupta,IT,Senior SWE,88000,Male,1987-09-25,rohit.gupta@pw.in,2015-05-12,Active
+8,,Kavitha,Menon,Analytics,Data Scientist,72000,Female,1991-02-18,kavitha.menon@pw.in,2020-07-01,Active
+9,EMP009,Sanjay,Nair,Ops,Ops Analyst,44000,Male,,sanjay.nair@pw.in,2018-11-15,Inactive
+10,EMP010,Deepa,Joshi,R&D,Research Scientist,95000,Female,1993-05-28,,2019-02-01,Active

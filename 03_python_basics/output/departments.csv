@@ -1,0 +1,9 @@
+dept_code,dept_name,location,budget,manager
+HR,Human Resources,Mumbai,4500000,Priya Sharma
+IT,Information Technology,Bengaluru,8500000,
+Sales,Sales & Marketing,Delhi,6200000,Vikram Singh
+Finance,Finance & Accounts,Mumbai,3800000,Ananya Iyer
+Support,Customer Support,Hyderabad,3200000,
+Ops,Operations,Pune,5100000,Sanjay Nair
+R&D,Research & Development,Bengaluru,9200000,Deepa Joshi
+Analytics,Data Science,Bengaluru,,Kavitha Menon
