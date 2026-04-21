@@ -1,0 +1,40 @@
+{
+  "etl": {
+    "pipeline": "ETL",
+    "steps": {
+      "extract": {
+        "rows": 50,
+        "ms": 3.6
+      },
+      "transform": {
+        "transformed": 50,
+        "skipped": 0,
+        "ms": 2.9
+      },
+      "load": {
+        "loaded": 50,
+        "ms": 29.57
+      }
+    },
+    "total_ms": 36.08
+  },
+  "elt": {
+    "pipeline": "ELT",
+    "steps": {
+      "extract": {
+        "rows": 50,
+        "ms": 2.22
+      },
+      "load_raw": {
+        "rows": 50,
+        "ms": 28.05
+      },
+      "transform_sql": {
+        "rows": 50,
+        "ms": 13.26
+      }
+    },
+    "total_ms": 43.54
+  },
+  "timestamp": "2026-04-21T12:41:43.311915"
+}
