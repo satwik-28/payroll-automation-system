@@ -1,0 +1,99 @@
+{
+  "oltp": {
+    "name": "Payroll OLTP (Online Transaction Processing)",
+    "purpose": "Day-to-day payroll operations: process salaries, update attendance, approve leaves",
+    "design_principles": [
+      "Normalized to 3NF \u2014 no data redundancy",
+      "Row-oriented storage \u2014 fast for single-row lookups",
+      "Optimized for INSERT / UPDATE / DELETE",
+      "Enforces referential integrity (FK constraints)",
+      "Short-lived transactions (ms response time)",
+      "Supports concurrent access by many users"
+    ],
+    "our_tables": {
+      "employees": "Employee master \u2014 updated on join/exit/promotion",
+      "payroll_records": "One row per employee per month \u2014 written monthly",
+      "attendance": "Written daily for 30 employees = 900 rows/month",
+      "leave_requests": "CRUD operations as requests are raised/approved",
+      "salary_grades": "Lookup table \u2014 rarely changed"
+    },
+    "typical_queries": [
+      "SELECT * FROM employees WHERE emp_id = 5",
+      "INSERT INTO payroll_records (...) VALUES (...)",
+      "UPDATE employees SET status='Inactive' WHERE emp_id=12",
+      "SELECT * FROM attendance WHERE emp_id=3 AND att_date='2026-03-01'"
+    ],
+    "indexes_used": [
+      "idx_emp_dept   \u2014 fast department-wise employee lookup",
+      "idx_att_emp_date \u2014 composite: fast attendance lookup by emp+date",
+      "idx_payroll_period \u2014 fast payroll run queries",
+      "idx_emp_status \u2014 filter active employees quickly"
+    ]
+  },
+  "olap_counts": {
+    "olap_dim_employee": 30,
+    "olap_dim_date": 3,
+    "olap_fact_payroll": 90,
+    "olap_agg_dept_month": 36
+  },
+  "comparison": {
+    "Primary Goal": {
+      "OLTP": "Process transactions",
+      "OLAP": "Analyze historical data"
+    },
+    "Query Type": {
+      "OLTP": "INSERT/UPDATE/DELETE/SELECT",
+      "OLAP": "Complex SELECT + GROUP BY + JOINs"
+    },
+    "Data Model": {
+      "OLTP": "Highly normalized (3NF+)",
+      "OLAP": "Denormalized (Star/Snowflake)"
+    },
+    "Data Volume": {
+      "OLTP": "Current data (GBs)",
+      "OLAP": "Historical data (TBs\u2013PBs)"
+    },
+    "Response Time": {
+      "OLTP": "Milliseconds",
+      "OLAP": "Seconds to minutes"
+    },
+    "Concurrency": {
+      "OLTP": "1000s of users/transactions",
+      "OLAP": "10s of analytical users"
+    },
+    "Optimization": {
+      "OLTP": "Row storage, FK indexes",
+      "OLAP": "Column storage, pre-aggregates"
+    },
+    "Update Frequency": {
+      "OLTP": "Continuous (real-time)",
+      "OLAP": "Batch (nightly/monthly ETL)"
+    },
+    "Schema Flexibility": {
+      "OLTP": "Rigid, normalized",
+      "OLAP": "Flexible, additive"
+    },
+    "Backup Strategy": {
+      "OLTP": "Continuous / WAL logs",
+      "OLAP": "Periodic snapshots"
+    },
+    "Tools": {
+      "OLTP": "SQLite/PostgreSQL/MySQL",
+      "OLAP": "BigQuery/Redshift/Snowflake"
+    },
+    "Payroll OLTP Eg": {
+      "OLTP": "Process April payroll run",
+      "OLAP": "Q4 salary trend analysis"
+    },
+    "Payroll OLAP Eg": {
+      "OLTP": "Mark attendance",
+      "OLAP": "3-year dept cost dashboard"
+    }
+  },
+  "olap_query_results": {
+    "Dept Cost by Quarter (from agg table \u2014 fastest)": 5,
+    "Salary Band Distribution": 4,
+    "Employment Type vs Net Salary": 1
+  },
+  "timestamp": "2026-04-21T12:41:42.667388"
+}
