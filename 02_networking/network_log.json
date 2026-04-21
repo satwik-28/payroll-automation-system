@@ -1,0 +1,138 @@
+{
+  "packets": [
+    {
+      "timestamp": "2026-04-21T12:40:51.395047",
+      "protocol": "HTTP GET",
+      "endpoint": "/api/health",
+      "status_code": 200,
+      "payload_bytes": 59,
+      "latency_ms": 0.0,
+      "checksum": "fcf9d151"
+    },
+    {
+      "timestamp": "2026-04-21T12:40:53.488848",
+      "protocol": "HTTP GET",
+      "endpoint": "/api/payroll",
+      "status_code": 200,
+      "payload_bytes": 1975,
+      "latency_ms": 35.14,
+      "checksum": "ba61d551"
+    },
+    {
+      "timestamp": "2026-04-21T12:40:55.522262",
+      "protocol": "HTTP GET",
+      "endpoint": "/api/employees",
+      "status_code": 200,
+      "payload_bytes": 98,
+      "latency_ms": 1.19,
+      "checksum": "bdd9609f"
+    },
+    {
+      "timestamp": "2026-04-21T12:40:57.565328",
+      "protocol": "HTTP POST",
+      "endpoint": "/api/payroll",
+      "status_code": 201,
+      "payload_bytes": 46,
+      "latency_ms": 0,
+      "checksum": "2099c74f"
+    },
+    {
+      "timestamp": "2026-04-21T12:40:58.079221",
+      "protocol": "FTP STOR",
+      "endpoint": "/payroll_march2026.csv",
+      "status_code": 226,
+      "payload_bytes": 52,
+      "latency_ms": 12.51,
+      "checksum": "7ff80ec3"
+    }
+  ],
+  "protocols": {
+    "HTTP": {
+      "port": 80,
+      "secure_port": 443,
+      "type": "Application Layer (L7)",
+      "stateless": true,
+      "payroll_use": "REST API for payroll data, employee records, reports",
+      "security": "TLS/SSL encryption (HTTPS), JWT tokens, API keys",
+      "methods": [
+        "GET /api/payroll",
+        "POST /api/payroll/generate",
+        "PATCH /api/employees/{id}/status"
+      ],
+      "headers_used": [
+        "Authorization: Bearer <JWT>",
+        "Content-Type: application/json",
+        "X-Request-ID: <uuid>"
+      ]
+    },
+    "FTP": {
+      "port": 21,
+      "data_port": 20,
+      "type": "Application Layer (L7)",
+      "stateful": true,
+      "payroll_use": "Bulk CSV export of payroll registers, salary slips",
+      "security": "FTPS (FTP over SSL) or SFTP (SSH-based)",
+      "modes": [
+        "Active (server connects to client)",
+        "Passive (client connects)"
+      ],
+      "commands": [
+        "USER payroll_admin",
+        "PASS ****",
+        "STOR payroll_march.csv",
+        "RETR salary_report.csv",
+        "QUIT"
+      ]
+    },
+    "TCP_IP": {
+      "type": "Transport + Network Layer",
+      "payroll_use": "Reliable delivery of payroll records between microservices",
+      "features": [
+        "Ordered delivery",
+        "Error correction",
+        "Flow control"
+      ],
+      "port_range": "1024-65535 (ephemeral for clients)"
+    },
+    "TLS": {
+      "version": "TLS 1.3",
+      "payroll_use": "Encrypt PAN numbers, salary data, bank account info",
+      "handshake": [
+        "Client Hello",
+        "Server Hello + Certificate",
+        "Key Exchange",
+        "Finished (symmetric encryption)"
+      ],
+      "cipher_suite": "TLS_AES_256_GCM_SHA384"
+    }
+  },
+  "ftp_log": [
+    {
+      "action": "CONNECT",
+      "host": "localhost",
+      "port": 21,
+      "status": "220 PayrollFTP Server Ready",
+      "ts": "2026-04-21T12:40:58.066707"
+    },
+    {
+      "action": "STOR",
+      "file": "payroll_march2026.csv",
+      "bytes": 52,
+      "status": "226 Transfer complete",
+      "latency_ms": 12.51,
+      "ts": "2026-04-21T12:40:58.079221"
+    },
+    {
+      "action": "RETR",
+      "file": "salary_report.pdf",
+      "status": "150 Opening data connection",
+      "ts": "2026-04-21T12:40:58.079221"
+    },
+    {
+      "action": "QUIT",
+      "status": "221 Goodbye",
+      "ts": "2026-04-21T12:40:58.079221"
+    }
+  ],
+  "timestamp": "2026-04-21T12:40:58.082995"
+}
