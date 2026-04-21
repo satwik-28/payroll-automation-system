@@ -1,0 +1,339 @@
+2026-04-19 01:59:58,976 [INFO] Creating directory structure...
+2026-04-19 01:59:58,977 [INFO]   Created: payroll_pipeline/raw/employees
+2026-04-19 01:59:58,977 [INFO]   Created: payroll_pipeline/raw/payroll
+2026-04-19 01:59:58,978 [INFO]   Created: payroll_pipeline/raw/attendance
+2026-04-19 01:59:58,978 [INFO]   Created: payroll_pipeline/raw/loans
+2026-04-19 01:59:58,979 [INFO]   Created: payroll_pipeline/processed/cleaned
+2026-04-19 01:59:58,980 [INFO]   Created: payroll_pipeline/processed/transformed
+2026-04-19 01:59:58,980 [INFO]   Created: payroll_pipeline/processed/aggregated
+2026-04-19 01:59:58,981 [INFO]   Created: payroll_pipeline/archive/2026/04
+2026-04-19 01:59:58,982 [INFO]   Created: payroll_pipeline/output/reports
+2026-04-19 01:59:58,982 [INFO]   Created: payroll_pipeline/output/exports
+2026-04-19 01:59:58,983 [INFO]   Created: payroll_pipeline/logs/pipeline
+2026-04-19 01:59:58,983 [INFO]   Created: payroll_pipeline/logs/errors
+2026-04-19 01:59:58,983 [INFO]   Created: payroll_pipeline/config
+2026-04-19 01:59:58,984 [INFO]   Created: payroll_pipeline/scripts
+2026-04-19 01:59:58,984 [INFO]   Created: payroll_pipeline/temp
+2026-04-19 01:59:58,984 [INFO]   Created: payroll_pipeline/quarantine
+2026-04-19 01:59:58,985 [INFO]   Created: payroll_pipeline/backup
+2026-04-19 01:59:58,985 [INFO] Setting file permissions...
+2026-04-19 01:59:58,985 [INFO]   raw/ → 0o755
+2026-04-19 01:59:58,985 [INFO]   processed/ → 0o755
+2026-04-19 01:59:58,986 [INFO]   output/ → 0o755
+2026-04-19 01:59:58,986 [INFO]   config/ → 0o700
+2026-04-19 01:59:58,986 [INFO]   scripts/ → 0o755
+2026-04-19 01:59:58,987 [INFO]   logs/ → 0o755
+2026-04-19 01:59:58,987 [INFO]   quarantine/ → 0o750
+2026-04-19 01:59:58,988 [INFO]   backup/ → 0o700
+2026-04-19 01:59:58,988 [INFO]   temp/ → 0o777
+2026-04-19 01:59:58,989 [INFO] Creating sample data files...
+2026-04-19 01:59:58,990 [INFO]   Created: raw/employees/employees.csv (264 bytes)
+2026-04-19 01:59:58,991 [INFO]   Created: raw/payroll/payroll_202603.csv (166 bytes)
+2026-04-19 01:59:58,991 [INFO]   Created: raw/attendance/attendance_202603.csv (112 bytes)
+2026-04-19 01:59:58,992 [INFO]   Created: config/pipeline.json (125 bytes)
+2026-04-19 01:59:58,992 [INFO] Automating file movement (raw → processed)...
+2026-04-19 01:59:58,996 [INFO]   Moved: payroll_202603.csv → processed/cleaned/ (166B)
+2026-04-19 01:59:59,000 [INFO]   Moved: employees.csv → processed/cleaned/ (264B)
+2026-04-19 01:59:59,002 [INFO]   Moved: attendance_202603.csv → processed/cleaned/ (112B)
+2026-04-19 01:59:59,003 [INFO] Movement complete. Moved=3, Quarantined=0
+2026-04-19 01:59:59,003 [INFO] Archiving processed files...
+2026-04-19 01:59:59,005 [INFO]   Archived: payroll_202603.csv
+2026-04-19 01:59:59,010 [INFO]   Archived: employees.csv
+2026-04-19 01:59:59,012 [INFO]   Archived: attendance_202603.csv
+2026-04-19 01:59:59,013 [INFO] Archived 3 files.
+2026-04-19 01:59:59,066 [INFO] Report saved: payroll_pipeline/logs/pipeline/report_20260419_015959.json
+2026-04-19 10:17:15,930 [INFO] Creating directory structure...
+2026-04-19 10:17:15,933 [INFO]   Created: payroll_pipeline/raw/employees
+2026-04-19 10:17:15,934 [INFO]   Created: payroll_pipeline/raw/payroll
+2026-04-19 10:17:15,935 [INFO]   Created: payroll_pipeline/raw/attendance
+2026-04-19 10:17:15,936 [INFO]   Created: payroll_pipeline/raw/loans
+2026-04-19 10:17:15,937 [INFO]   Created: payroll_pipeline/processed/cleaned
+2026-04-19 10:17:15,939 [INFO]   Created: payroll_pipeline/processed/transformed
+2026-04-19 10:17:15,940 [INFO]   Created: payroll_pipeline/processed/aggregated
+2026-04-19 10:17:15,940 [INFO]   Created: payroll_pipeline/archive/2026/04
+2026-04-19 10:17:15,941 [INFO]   Created: payroll_pipeline/output/reports
+2026-04-19 10:17:15,942 [INFO]   Created: payroll_pipeline/output/exports
+2026-04-19 10:17:15,942 [INFO]   Created: payroll_pipeline/logs/pipeline
+2026-04-19 10:17:15,943 [INFO]   Created: payroll_pipeline/logs/errors
+2026-04-19 10:17:15,943 [INFO]   Created: payroll_pipeline/config
+2026-04-19 10:17:15,946 [INFO]   Created: payroll_pipeline/scripts
+2026-04-19 10:17:15,948 [INFO]   Created: payroll_pipeline/temp
+2026-04-19 10:17:15,950 [INFO]   Created: payroll_pipeline/quarantine
+2026-04-19 10:17:15,952 [INFO]   Created: payroll_pipeline/backup
+2026-04-19 10:17:15,954 [INFO] Setting file permissions...
+2026-04-19 10:17:15,955 [INFO]   raw/ → 0o755
+2026-04-19 10:17:15,956 [INFO]   processed/ → 0o755
+2026-04-19 10:17:15,956 [INFO]   output/ → 0o755
+2026-04-19 10:17:15,957 [INFO]   config/ → 0o700
+2026-04-19 10:17:15,959 [INFO]   scripts/ → 0o755
+2026-04-19 10:17:15,961 [INFO]   logs/ → 0o755
+2026-04-19 10:17:15,963 [INFO]   quarantine/ → 0o750
+2026-04-19 10:17:15,963 [INFO]   backup/ → 0o700
+2026-04-19 10:17:15,964 [INFO]   temp/ → 0o777
+2026-04-19 10:17:15,965 [INFO] Creating sample data files...
+2026-04-19 10:17:15,968 [INFO]   Created: raw/employees/employees.csv (264 bytes)
+2026-04-19 10:17:15,972 [INFO]   Created: raw/payroll/payroll_202603.csv (166 bytes)
+2026-04-19 10:17:15,974 [INFO]   Created: raw/attendance/attendance_202603.csv (112 bytes)
+2026-04-19 10:17:15,976 [INFO]   Created: config/pipeline.json (125 bytes)
+2026-04-19 10:17:15,976 [INFO] Automating file movement (raw → processed)...
+2026-04-19 10:17:15,985 [INFO]   Moved: attendance_202603.csv → processed/cleaned/ (112B)
+2026-04-19 10:17:15,987 [INFO]   Moved: employees.csv → processed/cleaned/ (264B)
+2026-04-19 10:17:15,990 [INFO]   Moved: payroll_202603.csv → processed/cleaned/ (166B)
+2026-04-19 10:17:15,991 [INFO] Movement complete. Moved=3, Quarantined=0
+2026-04-19 10:17:15,992 [INFO] Archiving processed files...
+2026-04-19 10:17:15,996 [INFO]   Archived: attendance_202603.csv
+2026-04-19 10:17:16,002 [INFO]   Archived: employees.csv
+2026-04-19 10:17:16,006 [INFO]   Archived: payroll_202603.csv
+2026-04-19 10:17:16,007 [INFO] Archived 3 files.
+2026-04-19 10:17:16,073 [INFO] Report saved: payroll_pipeline/logs/pipeline/report_20260419_101716.json
+2026-04-19 15:08:56,738 [INFO] Creating directory structure...
+2026-04-19 15:08:56,738 [INFO]   Created: payroll_pipeline/raw/employees
+2026-04-19 15:08:56,739 [INFO]   Created: payroll_pipeline/raw/payroll
+2026-04-19 15:08:56,739 [INFO]   Created: payroll_pipeline/raw/attendance
+2026-04-19 15:08:56,739 [INFO]   Created: payroll_pipeline/raw/loans
+2026-04-19 15:08:56,740 [INFO]   Created: payroll_pipeline/processed/cleaned
+2026-04-19 15:08:56,740 [INFO]   Created: payroll_pipeline/processed/transformed
+2026-04-19 15:08:56,740 [INFO]   Created: payroll_pipeline/processed/aggregated
+2026-04-19 15:08:56,740 [INFO]   Created: payroll_pipeline/archive/2026/04
+2026-04-19 15:08:56,741 [INFO]   Created: payroll_pipeline/output/reports
+2026-04-19 15:08:56,741 [INFO]   Created: payroll_pipeline/output/exports
+2026-04-19 15:08:56,741 [INFO]   Created: payroll_pipeline/logs/pipeline
+2026-04-19 15:08:56,742 [INFO]   Created: payroll_pipeline/logs/errors
+2026-04-19 15:08:56,742 [INFO]   Created: payroll_pipeline/config
+2026-04-19 15:08:56,742 [INFO]   Created: payroll_pipeline/scripts
+2026-04-19 15:08:56,743 [INFO]   Created: payroll_pipeline/temp
+2026-04-19 15:08:56,743 [INFO]   Created: payroll_pipeline/quarantine
+2026-04-19 15:08:56,743 [INFO]   Created: payroll_pipeline/backup
+2026-04-19 15:08:56,743 [INFO] Setting file permissions...
+2026-04-19 15:08:56,744 [INFO]   raw/ → 0o755
+2026-04-19 15:08:56,744 [INFO]   processed/ → 0o755
+2026-04-19 15:08:56,744 [INFO]   output/ → 0o755
+2026-04-19 15:08:56,744 [INFO]   config/ → 0o700
+2026-04-19 15:08:56,745 [INFO]   scripts/ → 0o755
+2026-04-19 15:08:56,745 [INFO]   logs/ → 0o755
+2026-04-19 15:08:56,745 [INFO]   quarantine/ → 0o750
+2026-04-19 15:08:56,745 [INFO]   backup/ → 0o700
+2026-04-19 15:08:56,745 [INFO]   temp/ → 0o777
+2026-04-19 15:08:56,745 [INFO] Creating sample data files...
+2026-04-19 15:08:56,746 [INFO]   Created: raw/employees/employees.csv (264 bytes)
+2026-04-19 15:08:56,746 [INFO]   Created: raw/payroll/payroll_202603.csv (166 bytes)
+2026-04-19 15:08:56,747 [INFO]   Created: raw/attendance/attendance_202603.csv (112 bytes)
+2026-04-19 15:08:56,747 [INFO]   Created: config/pipeline.json (125 bytes)
+2026-04-19 15:08:56,748 [INFO] Automating file movement (raw → processed)...
+2026-04-19 15:08:56,750 [INFO]   Moved: attendance_202603.csv → processed/cleaned/ (112B)
+2026-04-19 15:08:56,753 [INFO]   Moved: employees.csv → processed/cleaned/ (264B)
+2026-04-19 15:08:56,755 [INFO]   Moved: payroll_202603.csv → processed/cleaned/ (166B)
+2026-04-19 15:08:56,755 [INFO] Movement complete. Moved=3, Quarantined=0
+2026-04-19 15:08:56,755 [INFO] Archiving processed files...
+2026-04-19 15:08:56,757 [INFO]   Archived: attendance_202603.csv
+2026-04-19 15:08:56,760 [INFO]   Archived: employees.csv
+2026-04-19 15:08:56,802 [INFO]   Archived: payroll_202603.csv
+2026-04-19 15:08:56,803 [INFO] Archived 3 files.
+2026-04-19 15:08:56,816 [INFO] Report saved: payroll_pipeline/logs/pipeline/report_20260419_150856.json
+2026-04-19 15:09:45,450 [INFO] Creating directory structure...
+2026-04-19 15:09:45,451 [INFO]   Created: payroll_pipeline/raw/employees
+2026-04-19 15:09:45,451 [INFO]   Created: payroll_pipeline/raw/payroll
+2026-04-19 15:09:45,451 [INFO]   Created: payroll_pipeline/raw/attendance
+2026-04-19 15:09:45,452 [INFO]   Created: payroll_pipeline/raw/loans
+2026-04-19 15:09:45,452 [INFO]   Created: payroll_pipeline/processed/cleaned
+2026-04-19 15:09:45,452 [INFO]   Created: payroll_pipeline/processed/transformed
+2026-04-19 15:09:45,453 [INFO]   Created: payroll_pipeline/processed/aggregated
+2026-04-19 15:09:45,453 [INFO]   Created: payroll_pipeline/archive/2026/04
+2026-04-19 15:09:45,453 [INFO]   Created: payroll_pipeline/output/reports
+2026-04-19 15:09:45,454 [INFO]   Created: payroll_pipeline/output/exports
+2026-04-19 15:09:45,454 [INFO]   Created: payroll_pipeline/logs/pipeline
+2026-04-19 15:09:45,454 [INFO]   Created: payroll_pipeline/logs/errors
+2026-04-19 15:09:45,454 [INFO]   Created: payroll_pipeline/config
+2026-04-19 15:09:45,455 [INFO]   Created: payroll_pipeline/scripts
+2026-04-19 15:09:45,455 [INFO]   Created: payroll_pipeline/temp
+2026-04-19 15:09:45,455 [INFO]   Created: payroll_pipeline/quarantine
+2026-04-19 15:09:45,456 [INFO]   Created: payroll_pipeline/backup
+2026-04-19 15:09:45,456 [INFO] Setting file permissions...
+2026-04-19 15:09:45,456 [INFO]   raw/ → 0o755
+2026-04-19 15:09:45,456 [INFO]   processed/ → 0o755
+2026-04-19 15:09:45,456 [INFO]   output/ → 0o755
+2026-04-19 15:09:45,457 [INFO]   config/ → 0o700
+2026-04-19 15:09:45,457 [INFO]   scripts/ → 0o755
+2026-04-19 15:09:45,457 [INFO]   logs/ → 0o755
+2026-04-19 15:09:45,457 [INFO]   quarantine/ → 0o750
+2026-04-19 15:09:45,457 [INFO]   backup/ → 0o700
+2026-04-19 15:09:45,458 [INFO]   temp/ → 0o777
+2026-04-19 15:09:45,458 [INFO] Creating sample data files...
+2026-04-19 15:09:45,458 [INFO]   Created: raw/employees/employees.csv (264 bytes)
+2026-04-19 15:09:45,459 [INFO]   Created: raw/payroll/payroll_202603.csv (166 bytes)
+2026-04-19 15:09:45,459 [INFO]   Created: raw/attendance/attendance_202603.csv (112 bytes)
+2026-04-19 15:09:45,460 [INFO]   Created: config/pipeline.json (125 bytes)
+2026-04-19 15:09:45,460 [INFO] Automating file movement (raw → processed)...
+2026-04-19 15:09:45,502 [INFO]   Moved: attendance_202603.csv → processed/cleaned/ (112B)
+2026-04-19 15:09:45,504 [INFO]   Moved: employees.csv → processed/cleaned/ (264B)
+2026-04-19 15:09:45,508 [INFO]   Moved: payroll_202603.csv → processed/cleaned/ (166B)
+2026-04-19 15:09:45,509 [INFO] Movement complete. Moved=3, Quarantined=0
+2026-04-19 15:09:45,509 [INFO] Archiving processed files...
+2026-04-19 15:09:45,511 [INFO]   Archived: attendance_202603.csv
+2026-04-19 15:09:45,513 [INFO]   Archived: employees.csv
+2026-04-19 15:09:45,514 [INFO]   Archived: payroll_202603.csv
+2026-04-19 15:09:45,514 [INFO] Archived 3 files.
+2026-04-19 15:09:45,526 [INFO] Report saved: payroll_pipeline/logs/pipeline/report_20260419_150945.json
+2026-04-19 15:10:39,153 [INFO] Creating directory structure...
+2026-04-19 15:10:39,154 [INFO]   Created: payroll_pipeline/raw/employees
+2026-04-19 15:10:39,155 [INFO]   Created: payroll_pipeline/raw/payroll
+2026-04-19 15:10:39,155 [INFO]   Created: payroll_pipeline/raw/attendance
+2026-04-19 15:10:39,156 [INFO]   Created: payroll_pipeline/raw/loans
+2026-04-19 15:10:39,156 [INFO]   Created: payroll_pipeline/processed/cleaned
+2026-04-19 15:10:39,157 [INFO]   Created: payroll_pipeline/processed/transformed
+2026-04-19 15:10:39,157 [INFO]   Created: payroll_pipeline/processed/aggregated
+2026-04-19 15:10:39,158 [INFO]   Created: payroll_pipeline/archive/2026/04
+2026-04-19 15:10:39,159 [INFO]   Created: payroll_pipeline/output/reports
+2026-04-19 15:10:39,159 [INFO]   Created: payroll_pipeline/output/exports
+2026-04-19 15:10:39,160 [INFO]   Created: payroll_pipeline/logs/pipeline
+2026-04-19 15:10:39,160 [INFO]   Created: payroll_pipeline/logs/errors
+2026-04-19 15:10:39,160 [INFO]   Created: payroll_pipeline/config
+2026-04-19 15:10:39,161 [INFO]   Created: payroll_pipeline/scripts
+2026-04-19 15:10:39,161 [INFO]   Created: payroll_pipeline/temp
+2026-04-19 15:10:39,162 [INFO]   Created: payroll_pipeline/quarantine
+2026-04-19 15:10:39,162 [INFO]   Created: payroll_pipeline/backup
+2026-04-19 15:10:39,162 [INFO] Setting file permissions...
+2026-04-19 15:10:39,163 [INFO]   raw/ → 0o755
+2026-04-19 15:10:39,163 [INFO]   processed/ → 0o755
+2026-04-19 15:10:39,164 [INFO]   output/ → 0o755
+2026-04-19 15:10:39,164 [INFO]   config/ → 0o700
+2026-04-19 15:10:39,164 [INFO]   scripts/ → 0o755
+2026-04-19 15:10:39,164 [INFO]   logs/ → 0o755
+2026-04-19 15:10:39,165 [INFO]   quarantine/ → 0o750
+2026-04-19 15:10:39,165 [INFO]   backup/ → 0o700
+2026-04-19 15:10:39,166 [INFO]   temp/ → 0o777
+2026-04-19 15:10:39,166 [INFO] Creating sample data files...
+2026-04-19 15:10:39,166 [INFO]   Created: raw/employees/employees.csv (264 bytes)
+2026-04-19 15:10:39,167 [INFO]   Created: raw/payroll/payroll_202603.csv (166 bytes)
+2026-04-19 15:10:39,168 [INFO]   Created: raw/attendance/attendance_202603.csv (112 bytes)
+2026-04-19 15:10:39,169 [INFO]   Created: config/pipeline.json (125 bytes)
+2026-04-19 15:10:39,169 [INFO] Automating file movement (raw → processed)...
+2026-04-19 15:10:39,201 [INFO]   Moved: attendance_202603.csv → processed/cleaned/ (112B)
+2026-04-19 15:10:39,205 [INFO]   Moved: employees.csv → processed/cleaned/ (264B)
+2026-04-19 15:10:39,209 [INFO]   Moved: payroll_202603.csv → processed/cleaned/ (166B)
+2026-04-19 15:10:39,211 [INFO] Movement complete. Moved=3, Quarantined=0
+2026-04-19 15:10:39,211 [INFO] Archiving processed files...
+2026-04-19 15:10:39,214 [INFO]   Archived: attendance_202603.csv
+2026-04-19 15:10:39,216 [INFO]   Archived: employees.csv
+2026-04-19 15:10:39,218 [INFO]   Archived: payroll_202603.csv
+2026-04-19 15:10:39,219 [INFO] Archived 3 files.
+2026-04-19 15:10:39,246 [INFO] Report saved: payroll_pipeline/logs/pipeline/report_20260419_151039.json
+2026-04-21 02:07:25,359 [INFO] Creating directory structure...
+2026-04-21 02:07:25,360 [INFO]   Created: payroll_pipeline/raw/employees
+2026-04-21 02:07:25,360 [INFO]   Created: payroll_pipeline/raw/payroll
+2026-04-21 02:07:25,360 [INFO]   Created: payroll_pipeline/raw/attendance
+2026-04-21 02:07:25,361 [INFO]   Created: payroll_pipeline/raw/loans
+2026-04-21 02:07:25,361 [INFO]   Created: payroll_pipeline/processed/cleaned
+2026-04-21 02:07:25,362 [INFO]   Created: payroll_pipeline/processed/transformed
+2026-04-21 02:07:25,362 [INFO]   Created: payroll_pipeline/processed/aggregated
+2026-04-21 02:07:25,363 [INFO]   Created: payroll_pipeline/archive/2026/04
+2026-04-21 02:07:25,363 [INFO]   Created: payroll_pipeline/output/reports
+2026-04-21 02:07:25,364 [INFO]   Created: payroll_pipeline/output/exports
+2026-04-21 02:07:25,377 [INFO]   Created: payroll_pipeline/logs/pipeline
+2026-04-21 02:07:25,378 [INFO]   Created: payroll_pipeline/logs/errors
+2026-04-21 02:07:25,378 [INFO]   Created: payroll_pipeline/config
+2026-04-21 02:07:25,379 [INFO]   Created: payroll_pipeline/scripts
+2026-04-21 02:07:25,379 [INFO]   Created: payroll_pipeline/temp
+2026-04-21 02:07:25,380 [INFO]   Created: payroll_pipeline/quarantine
+2026-04-21 02:07:25,380 [INFO]   Created: payroll_pipeline/backup
+2026-04-21 02:07:25,380 [INFO] Setting file permissions...
+2026-04-21 02:07:25,381 [INFO]   raw/ → 0o755
+2026-04-21 02:07:25,381 [INFO]   processed/ → 0o755
+2026-04-21 02:07:25,381 [INFO]   output/ → 0o755
+2026-04-21 02:07:25,381 [INFO]   config/ → 0o700
+2026-04-21 02:07:25,382 [INFO]   scripts/ → 0o755
+2026-04-21 02:07:25,382 [INFO]   logs/ → 0o755
+2026-04-21 02:07:25,382 [INFO]   quarantine/ → 0o750
+2026-04-21 02:07:25,383 [INFO]   backup/ → 0o700
+2026-04-21 02:07:25,383 [INFO]   temp/ → 0o777
+2026-04-21 02:07:25,383 [INFO] Creating sample data files...
+2026-04-21 02:07:25,384 [INFO]   Created: raw/employees/employees.csv (264 bytes)
+2026-04-21 02:07:25,384 [INFO]   Created: raw/payroll/payroll_202603.csv (166 bytes)
+2026-04-21 02:07:25,385 [INFO]   Created: raw/attendance/attendance_202603.csv (112 bytes)
+2026-04-21 02:07:25,386 [INFO]   Created: config/pipeline.json (125 bytes)
+2026-04-21 02:07:25,386 [INFO] Automating file movement (raw → processed)...
+2026-04-21 02:07:25,389 [INFO]   Moved: attendance_202603.csv → processed/cleaned/ (112B)
+2026-04-21 02:07:25,391 [INFO]   Moved: employees.csv → processed/cleaned/ (264B)
+2026-04-21 02:07:25,396 [INFO]   Moved: payroll_202603.csv → processed/cleaned/ (166B)
+2026-04-21 02:07:25,396 [INFO] Movement complete. Moved=3, Quarantined=0
+2026-04-21 02:07:25,397 [INFO] Archiving processed files...
+2026-04-21 02:07:25,399 [INFO]   Archived: attendance_202603.csv
+2026-04-21 02:07:25,401 [INFO]   Archived: employees.csv
+2026-04-21 02:07:25,405 [INFO]   Archived: payroll_202603.csv
+2026-04-21 02:07:25,405 [INFO] Archived 3 files.
+2026-04-21 02:07:25,423 [INFO] Report saved: payroll_pipeline/logs/pipeline/report_20260421_020725.json
+2026-04-21 07:03:10,020 [INFO] Creating directory structure...
+2026-04-21 07:03:10,021 [INFO]   Created: payroll_pipeline/raw/employees
+2026-04-21 07:03:10,021 [INFO]   Created: payroll_pipeline/raw/payroll
+2026-04-21 07:03:10,021 [INFO]   Created: payroll_pipeline/raw/attendance
+2026-04-21 07:03:10,022 [INFO]   Created: payroll_pipeline/raw/loans
+2026-04-21 07:03:10,022 [INFO]   Created: payroll_pipeline/processed/cleaned
+2026-04-21 07:03:10,022 [INFO]   Created: payroll_pipeline/processed/transformed
+2026-04-21 07:03:10,022 [INFO]   Created: payroll_pipeline/processed/aggregated
+2026-04-21 07:03:10,023 [INFO]   Created: payroll_pipeline/archive/2026/04
+2026-04-21 07:03:10,023 [INFO]   Created: payroll_pipeline/output/reports
+2026-04-21 07:03:10,023 [INFO]   Created: payroll_pipeline/output/exports
+2026-04-21 07:03:10,023 [INFO]   Created: payroll_pipeline/logs/pipeline
+2026-04-21 07:03:10,024 [INFO]   Created: payroll_pipeline/logs/errors
+2026-04-21 07:03:10,024 [INFO]   Created: payroll_pipeline/config
+2026-04-21 07:03:10,024 [INFO]   Created: payroll_pipeline/scripts
+2026-04-21 07:03:10,024 [INFO]   Created: payroll_pipeline/temp
+2026-04-21 07:03:10,025 [INFO]   Created: payroll_pipeline/quarantine
+2026-04-21 07:03:10,025 [INFO]   Created: payroll_pipeline/backup
+2026-04-21 07:03:10,025 [INFO] Setting file permissions...
+2026-04-21 07:03:10,025 [INFO]   raw/ → 0o755
+2026-04-21 07:03:10,025 [INFO]   processed/ → 0o755
+2026-04-21 07:03:10,026 [INFO]   output/ → 0o755
+2026-04-21 07:03:10,026 [INFO]   config/ → 0o700
+2026-04-21 07:03:10,026 [INFO]   scripts/ → 0o755
+2026-04-21 07:03:10,026 [INFO]   logs/ → 0o755
+2026-04-21 07:03:10,026 [INFO]   quarantine/ → 0o750
+2026-04-21 07:03:10,027 [INFO]   backup/ → 0o700
+2026-04-21 07:03:10,027 [INFO]   temp/ → 0o777
+2026-04-21 07:03:10,027 [INFO] Creating sample data files...
+2026-04-21 07:03:10,027 [INFO]   Created: raw/employees/employees.csv (264 bytes)
+2026-04-21 07:03:10,028 [INFO]   Created: raw/payroll/payroll_202603.csv (166 bytes)
+2026-04-21 07:03:10,028 [INFO]   Created: raw/attendance/attendance_202603.csv (112 bytes)
+2026-04-21 07:03:10,029 [INFO]   Created: config/pipeline.json (125 bytes)
+2026-04-21 07:03:10,029 [INFO] Automating file movement (raw → processed)...
+2026-04-21 07:03:10,033 [INFO]   Moved: attendance_202603.csv → processed/cleaned/ (112B)
+2026-04-21 07:03:10,034 [INFO]   Moved: employees.csv → processed/cleaned/ (264B)
+2026-04-21 07:03:10,036 [INFO]   Moved: payroll_202603.csv → processed/cleaned/ (166B)
+2026-04-21 07:03:10,036 [INFO] Movement complete. Moved=3, Quarantined=0
+2026-04-21 07:03:10,036 [INFO] Archiving processed files...
+2026-04-21 07:03:10,077 [INFO]   Archived: attendance_202603.csv
+2026-04-21 07:03:10,079 [INFO]   Archived: employees.csv
+2026-04-21 07:03:10,081 [INFO]   Archived: payroll_202603.csv
+2026-04-21 07:03:10,081 [INFO] Archived 3 files.
+2026-04-21 07:03:10,094 [INFO] Report saved: payroll_pipeline/logs/pipeline/report_20260421_070310.json
+2026-04-21 12:40:49,008 [INFO] Creating directory structure...
+2026-04-21 12:40:49,008 [INFO]   Created: payroll_pipeline\raw\employees
+2026-04-21 12:40:49,008 [INFO]   Created: payroll_pipeline\raw\payroll
+2026-04-21 12:40:49,016 [INFO]   Created: payroll_pipeline\raw\attendance
+2026-04-21 12:40:49,016 [INFO]   Created: payroll_pipeline\raw\loans
+2026-04-21 12:40:49,018 [INFO]   Created: payroll_pipeline\processed\cleaned
+2026-04-21 12:40:49,021 [INFO]   Created: payroll_pipeline\processed\transformed
+2026-04-21 12:40:49,024 [INFO]   Created: payroll_pipeline\processed\aggregated
+2026-04-21 12:40:49,026 [INFO]   Created: payroll_pipeline\archive\2026\04
+2026-04-21 12:40:49,028 [INFO]   Created: payroll_pipeline\output\reports
+2026-04-21 12:40:49,028 [INFO]   Created: payroll_pipeline\output\exports
+2026-04-21 12:40:49,033 [INFO]   Created: payroll_pipeline\logs\pipeline
+2026-04-21 12:40:49,035 [INFO]   Created: payroll_pipeline\logs\errors
+2026-04-21 12:40:49,037 [INFO]   Created: payroll_pipeline\config
+2026-04-21 12:40:49,037 [INFO]   Created: payroll_pipeline\scripts
+2026-04-21 12:40:49,039 [INFO]   Created: payroll_pipeline\temp
+2026-04-21 12:40:49,041 [INFO]   Created: payroll_pipeline\quarantine
+2026-04-21 12:40:49,043 [INFO]   Created: payroll_pipeline\backup
+2026-04-21 12:40:49,043 [INFO] Setting file permissions...
+2026-04-21 12:40:49,117 [INFO] Creating sample data files...
+2026-04-21 12:40:49,119 [INFO]   Created: raw/employees/employees.csv (270 bytes)
+2026-04-21 12:40:49,124 [INFO]   Created: raw/payroll/payroll_202603.csv (170 bytes)
+2026-04-21 12:40:49,126 [INFO]   Created: raw/attendance/attendance_202603.csv (116 bytes)
+2026-04-21 12:40:49,130 [INFO]   Created: config/pipeline.json (131 bytes)
+2026-04-21 12:40:49,166 [INFO] Movement complete. Moved=3, Quarantined=0
+2026-04-21 12:40:49,167 [INFO] Archiving processed files...
+2026-04-21 12:40:49,172 [INFO]   Archived: attendance_202603.csv
+2026-04-21 12:40:49,180 [INFO]   Archived: employees.csv
+2026-04-21 12:40:49,186 [INFO]   Archived: payroll_202603.csv
+2026-04-21 12:40:49,186 [INFO] Archived 3 files.
+2026-04-21 12:40:49,200 [INFO] Report saved: payroll_pipeline\logs\pipeline\report_20260421_124049.json

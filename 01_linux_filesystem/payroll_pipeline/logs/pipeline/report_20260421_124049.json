@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-04-21T12:40:49.187360",
+  "project_dir": "c:\\Users\\KIIT0001\\Desktop\\payroll_complete\\01_linux_filesystem\\payroll_pipeline",
+  "files": {
+    "raw": 3,
+    "processed": 3,
+    "archived": 3,
+    "quarantine": 0
+  },
+  "disk_usage_bytes": 1799,
+  "status": "SUCCESS"
+}

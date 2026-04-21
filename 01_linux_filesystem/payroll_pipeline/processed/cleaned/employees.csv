@@ -1,0 +1,6 @@
+emp_id,emp_code,first_name,last_name,department,basic_salary,status
+1,EMP001,Rajesh,Kumar,HR,45000,Active
+2,EMP002,Priya,Sharma,HR,125000,Active
+3,EMP003,Amit,Patel,IT,65000,Active
+4,EMP004,Sneha,Reddy,Support,30000,Active
+5,EMP005,Vikram,Singh,Sales,38000,Active

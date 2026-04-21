@@ -1,0 +1,4 @@
+payroll_id,emp_id,period,gross_salary,net_salary,status
+1,1,March-2026,64900,62363.33,Paid
+2,2,March-2026,197500,172166.67,Paid
+3,3,March-2026,97266.67,91581.67,Paid
