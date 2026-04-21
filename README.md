@@ -4,7 +4,7 @@ A production-grade **Payroll Automation System** covering all 30 Data Engineerin
 tasks from basic Python to cloud data warehouses, implemented entirely in
 **Python + SQLite** with no external cluster required.
 
-for file 05_pandas_numpy one large file do link for that - https://drive.google.com/file/d/1iQsBT-hOw-LnFWnh0bf10TX5wSnBzH03/view?usp=sharing
+for file 05_pandas_numpy one large file, link for that - https://drive.google.com/file/d/1iQsBT-hOw-LnFWnh0bf10TX5wSnBzH03/view?usp=sharing
 ---
 
 ## ⚡ Quick Start
