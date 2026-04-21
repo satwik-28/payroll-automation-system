@@ -1,0 +1,104 @@
+{
+  "task18_stream": {
+    "produced": 15,
+    "consumed": 15,
+    "event_types": [
+      "LEAVE_APPLIED",
+      "TDS_CALCULATED",
+      "LOAN_EMI_DUE",
+      "EMPLOYEE_JOINED",
+      "ATTENDANCE_MARKED",
+      "PAYROLL_PROCESSED",
+      "SALARY_REVISED"
+    ]
+  },
+  "task19_kafka": {
+    "produced": 13,
+    "consumed": 8,
+    "topic_info": {
+      "topic": "payroll-events",
+      "partitions": 3,
+      "replication": 2,
+      "messages": 13,
+      "total_offsets": [
+        2,
+        8,
+        3
+      ]
+    }
+  },
+  "task20_offsets": {
+    "payroll-group-1:p0": {
+      "committed": 2,
+      "log_end": 2,
+      "lag": 0
+    },
+    "payroll-group-1:p1": {
+      "committed": 8,
+      "log_end": 8,
+      "lag": 0
+    },
+    "payroll-group-1:p2": {
+      "committed": 3,
+      "log_end": 3,
+      "lag": 0
+    },
+    "payroll-group-2:p0": {
+      "committed": 0,
+      "log_end": 2,
+      "lag": 2
+    },
+    "payroll-group-2:p1": {
+      "committed": 0,
+      "log_end": 8,
+      "lag": 8
+    },
+    "payroll-group-2:p2": {
+      "committed": 0,
+      "log_end": 3,
+      "lag": 3
+    }
+  },
+  "task21_streaming": [
+    {
+      "batch_id": 1,
+      "processed": 9,
+      "dept_aggregation": {
+        "IT": {
+          "count": 1,
+          "avg": 1276234.0
+        },
+        "Finance": {
+          "count": 1,
+          "avg": 712547.0
+        },
+        "Sales": {
+          "count": 1,
+          "avg": 408941.0
+        },
+        "ALL": {
+          "count": 1,
+          "avg": 749419.0
+        },
+        "Ops": {
+          "count": 1,
+          "avg": 417202.0
+        },
+        "HR": {
+          "count": 2,
+          "avg": 152325.0
+        },
+        "Support": {
+          "count": 1,
+          "avg": 0.0
+        },
+        "R&D": {
+          "count": 1,
+          "avg": 724335.0
+        }
+      },
+      "timestamp": "2026-04-21T12:42:06.407850"
+    }
+  ],
+  "timestamp": "2026-04-21T12:42:07.912468"
+}
