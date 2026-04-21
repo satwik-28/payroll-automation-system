@@ -1,0 +1,382 @@
+{
+  "employee_dq": {
+    "dataset": "employees",
+    "run_time": "2026-04-21T12:42:19.794665",
+    "total_records": 30,
+    "total_checks": 11,
+    "passed": 11,
+    "failed": 0,
+    "dq_score_pct": 100.0,
+    "overall_status": "PASS",
+    "check_results": [
+      {
+        "check": "completeness_emp_code",
+        "description": "Field 'emp_code' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "non_null": 30,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "completeness_email",
+        "description": "Field 'email' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "non_null": 30,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "completeness_pan_number",
+        "description": "Field 'pan_number' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "non_null": 30,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "completeness_bank_account",
+        "description": "Field 'bank_account' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "non_null": 30,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "uniqueness_emp_code",
+        "description": "Field 'emp_code' must be unique",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "unique": 30,
+          "duplicates": 0,
+          "duplicate_examples": []
+        }
+      },
+      {
+        "check": "uniqueness_email",
+        "description": "Field 'email' must be unique",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "unique": 30,
+          "duplicates": 0,
+          "duplicate_examples": []
+        }
+      },
+      {
+        "check": "uniqueness_pan_number",
+        "description": "Field 'pan_number' must be unique",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "unique": 30,
+          "duplicates": 0,
+          "duplicate_examples": []
+        }
+      },
+      {
+        "check": "range_basic_salary",
+        "description": "'basic_salary' must be in [10000, 5000000]",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "violations": 0,
+          "min": 27000.0,
+          "max": 480000.0,
+          "examples": []
+        }
+      },
+      {
+        "check": "valid_status",
+        "description": "Status must be valid",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "violations": 0,
+          "violation_rate_pct": 0.0,
+          "examples": []
+        }
+      },
+      {
+        "check": "valid_gender",
+        "description": "Gender must be Male/Female/Other",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "violations": 0,
+          "violation_rate_pct": 0.0,
+          "examples": []
+        }
+      },
+      {
+        "check": "emp_code_format",
+        "description": "emp_code must start with EMP",
+        "passed": true,
+        "details": {
+          "total": 30,
+          "violations": 0,
+          "violation_rate_pct": 0.0,
+          "examples": []
+        }
+      }
+    ]
+  },
+  "payroll_dq": {
+    "dataset": "payroll_records",
+    "run_time": "2026-04-21T12:42:19.801786",
+    "total_records": 90,
+    "total_checks": 12,
+    "passed": 12,
+    "failed": 0,
+    "dq_score_pct": 100.0,
+    "overall_status": "PASS",
+    "check_results": [
+      {
+        "check": "completeness_emp_id",
+        "description": "Field 'emp_id' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "non_null": 90,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "completeness_period_id",
+        "description": "Field 'period_id' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "non_null": 90,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "completeness_gross_salary",
+        "description": "Field 'gross_salary' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "non_null": 90,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "completeness_net_salary",
+        "description": "Field 'net_salary' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "non_null": 90,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "uniqueness_payroll_id",
+        "description": "Field 'payroll_id' must be unique",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "unique": 90,
+          "duplicates": 0,
+          "duplicate_examples": []
+        }
+      },
+      {
+        "check": "range_gross_salary",
+        "description": "'gross_salary' must be in [0, 5000000]",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "violations": 0,
+          "min": 34550.0,
+          "max": 823000.0,
+          "examples": []
+        }
+      },
+      {
+        "check": "range_net_salary",
+        "description": "'net_salary' must be in [0, 5000000]",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "violations": 0,
+          "min": 32550.0,
+          "max": 610141.67,
+          "examples": []
+        }
+      },
+      {
+        "check": "range_pf_employee",
+        "description": "'pf_employee' must be in [0, 1800]",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "violations": 0,
+          "min": 1800.0,
+          "max": 1800.0,
+          "examples": []
+        }
+      },
+      {
+        "check": "range_days_present",
+        "description": "'days_present' must be in [0, 31]",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "violations": 0,
+          "min": 21.0,
+          "max": 27.0,
+          "examples": []
+        }
+      },
+      {
+        "check": "net_le_gross",
+        "description": "Net must be \u2264 Gross",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "violations": 0,
+          "violation_rate_pct": 0.0,
+          "examples": []
+        }
+      },
+      {
+        "check": "positive_values",
+        "description": "All salary fields must be non-negative",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "violations": 0,
+          "violation_rate_pct": 0.0,
+          "examples": []
+        }
+      },
+      {
+        "check": "valid_status",
+        "description": "Payroll status must be valid",
+        "passed": true,
+        "details": {
+          "total": 90,
+          "violations": 0,
+          "violation_rate_pct": 0.0,
+          "examples": []
+        }
+      }
+    ]
+  },
+  "attendance_dq": {
+    "dataset": "attendance",
+    "run_time": "2026-04-21T12:42:19.828938",
+    "total_records": 1770,
+    "total_checks": 7,
+    "passed": 7,
+    "failed": 0,
+    "dq_score_pct": 100.0,
+    "overall_status": "PASS",
+    "check_results": [
+      {
+        "check": "completeness_emp_id",
+        "description": "Field 'emp_id' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 1770,
+          "non_null": 1770,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "completeness_att_date",
+        "description": "Field 'att_date' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 1770,
+          "non_null": 1770,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "completeness_status",
+        "description": "Field 'status' must be >= 100% non-null",
+        "passed": true,
+        "details": {
+          "total": 1770,
+          "non_null": 1770,
+          "completeness_pct": 100.0,
+          "threshold_pct": 100
+        }
+      },
+      {
+        "check": "uniqueness_att_id",
+        "description": "Field 'att_id' must be unique",
+        "passed": true,
+        "details": {
+          "total": 1770,
+          "unique": 1770,
+          "duplicates": 0,
+          "duplicate_examples": []
+        }
+      },
+      {
+        "check": "range_hours_worked",
+        "description": "'hours_worked' must be in [0, 16]",
+        "passed": true,
+        "details": {
+          "total": 1770,
+          "violations": 0,
+          "min": 0.0,
+          "max": 9.5,
+          "examples": []
+        }
+      },
+      {
+        "check": "valid_att_status",
+        "description": "Attendance status must be valid",
+        "passed": true,
+        "details": {
+          "total": 1770,
+          "violations": 0,
+          "violation_rate_pct": 0.0,
+          "examples": []
+        }
+      },
+      {
+        "check": "hours_when_present",
+        "description": "Present employees must have \u22654 hours worked",
+        "passed": true,
+        "details": {
+          "total": 1770,
+          "violations": 0,
+          "violation_rate_pct": 0.0,
+          "examples": []
+        }
+      }
+    ]
+  },
+  "anomalies": {
+    "salary_z_outliers": 3,
+    "iqr_outliers": 12,
+    "attendance_flags": 0,
+    "payroll_spikes": 0
+  },
+  "overall_avg_dq_score": 100.0,
+  "timestamp": "2026-04-21T12:42:19.911284"
+}
