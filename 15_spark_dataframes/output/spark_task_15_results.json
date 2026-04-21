@@ -1,0 +1,21 @@
+{
+  "hdfs_report": {
+    "total_files": 9,
+    "total_dirs": 7,
+    "total_blocks": 141,
+    "total_size_kb": 16.6,
+    "replication": 3,
+    "block_size_B": 128
+  },
+  "spark_net_stats": {
+    "count": 90,
+    "mean": 136034.5899,
+    "min": 32550.0,
+    "max": 610141.67,
+    "std": 126419.3678,
+    "sum": 12243113.09
+  },
+  "dept_summary_rows": 12,
+  "enriched_rows": 72,
+  "timestamp": "2026-04-21T12:41:44.834300"
+}
