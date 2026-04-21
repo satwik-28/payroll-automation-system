@@ -1,0 +1,127 @@
+{
+  "task22_etl_dag": {
+    "dag_id": "payroll_monthly_etl",
+    "schedule": "0 9 1 * *",
+    "tasks_count": 11,
+    "last_run_state": "success",
+    "task_results": [
+      {
+        "task_id": "validate_period",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.085642,
+        "start": "2026-04-21T12:42:11.049509",
+        "end": "2026-04-21T12:42:11.135151",
+        "error": null
+      },
+      {
+        "task_id": "extract_employee_data",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.164641,
+        "start": "2026-04-21T12:42:11.142523",
+        "end": "2026-04-21T12:42:11.307164",
+        "error": null
+      },
+      {
+        "task_id": "extract_attendance_data",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.07044,
+        "start": "2026-04-21T12:42:11.308599",
+        "end": "2026-04-21T12:42:11.379039",
+        "error": null
+      },
+      {
+        "task_id": "calculate_payroll",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.10482,
+        "start": "2026-04-21T12:42:11.379039",
+        "end": "2026-04-21T12:42:11.483859",
+        "error": null
+      },
+      {
+        "task_id": "validate_payroll",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.043494,
+        "start": "2026-04-21T12:42:11.486628",
+        "end": "2026-04-21T12:42:11.530122",
+        "error": null
+      },
+      {
+        "task_id": "generate_payslips",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.070831,
+        "start": "2026-04-21T12:42:11.530122",
+        "end": "2026-04-21T12:42:11.600953",
+        "error": null
+      },
+      {
+        "task_id": "transfer_to_bank",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.061149,
+        "start": "2026-04-21T12:42:11.600953",
+        "end": "2026-04-21T12:42:11.662102",
+        "error": null
+      },
+      {
+        "task_id": "send_payslip_emails",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.057938,
+        "start": "2026-04-21T12:42:11.662102",
+        "end": "2026-04-21T12:42:11.720040",
+        "error": null
+      },
+      {
+        "task_id": "update_dw",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.087713,
+        "start": "2026-04-21T12:42:11.750115",
+        "end": "2026-04-21T12:42:11.837828",
+        "error": null
+      },
+      {
+        "task_id": "send_summary_report",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.039141,
+        "start": "2026-04-21T12:42:11.848319",
+        "end": "2026-04-21T12:42:11.887460",
+        "error": null
+      },
+      {
+        "task_id": "archive_payroll_data",
+        "status": "success",
+        "attempt": 1,
+        "duration_s": 0.042156,
+        "start": "2026-04-21T12:42:11.887460",
+        "end": "2026-04-21T12:42:11.929616",
+        "error": null
+      }
+    ]
+  },
+  "task23_monitoring": {
+    "total_runs": 5,
+    "successful": 5,
+    "failed": 0,
+    "success_rate_pct": 100.0,
+    "avg_duration_s": 0.7,
+    "max_duration_s": 0.88,
+    "sla_breaches": 0,
+    "alerts": []
+  },
+  "schedules": [
+    "Monthly payroll",
+    "Daily attendance",
+    "Weekly reports",
+    "Yearly tax",
+    "Hourly sync"
+  ],
+  "timestamp": "2026-04-21T12:42:14.611999"
+}
