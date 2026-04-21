@@ -1,0 +1,9 @@
+{
+  "total": 500,
+  "loaded": 500,
+  "failed": 0,
+  "chunks": 5,
+  "start": "2026-04-21T12:41:43.349747",
+  "elapsed_ms": 139.31,
+  "throughput_rps": 3589.0
+}
