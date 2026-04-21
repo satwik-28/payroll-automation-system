@@ -1,0 +1,90 @@
+[
+  {
+    "dept": "Analytics",
+    "record_count": 1,
+    "net_sum": 102340.0,
+    "net_mean": 102340.0,
+    "net_max": 102340.0,
+    "net_min": 102340.0,
+    "basic_mean": 72000.0,
+    "basic_std": 0,
+    "days_present_mean": 26.0
+  },
+  {
+    "dept": "Finance",
+    "record_count": 1,
+    "net_sum": 32400.0,
+    "net_mean": 32400.0,
+    "net_max": 32400.0,
+    "net_min": 32400.0,
+    "basic_mean": 28000.0,
+    "basic_std": 0,
+    "days_present_mean": 24.0
+  },
+  {
+    "dept": "HR",
+    "record_count": 2,
+    "net_sum": 241050.0,
+    "net_mean": 120525.0,
+    "net_max": 175200.0,
+    "net_min": 65850.0,
+    "basic_mean": 85000.0,
+    "basic_std": 56568.54,
+    "days_present_mean": 26.0
+  },
+  {
+    "dept": "IT",
+    "record_count": 2,
+    "net_sum": 220370.0,
+    "net_mean": 110185.0,
+    "net_max": 130920.0,
+    "net_min": 89450.0,
+    "basic_mean": 76500.0,
+    "basic_std": 16263.46,
+    "days_present_mean": 26.5
+  },
+  {
+    "dept": "Ops",
+    "record_count": 1,
+    "net_sum": 63200.0,
+    "net_mean": 63200.0,
+    "net_max": 63200.0,
+    "net_min": 63200.0,
+    "basic_mean": 44000.0,
+    "basic_std": 0,
+    "days_present_mean": 20.0
+  },
+  {
+    "dept": "R&D",
+    "record_count": 1,
+    "net_sum": 135100.0,
+    "net_mean": 135100.0,
+    "net_max": 135100.0,
+    "net_min": 135100.0,
+    "basic_mean": 95000.0,
+    "basic_std": 0,
+    "days_present_mean": 27.0
+  },
+  {
+    "dept": "Sales",
+    "record_count": 1,
+    "net_sum": 51660.0,
+    "net_mean": 51660.0,
+    "net_max": 51660.0,
+    "net_min": 51660.0,
+    "basic_mean": 38000.0,
+    "basic_std": 0,
+    "days_present_mean": 25.0
+  },
+  {
+    "dept": "Support",
+    "record_count": 1,
+    "net_sum": 35700.0,
+    "net_mean": 35700.0,
+    "net_max": 35700.0,
+    "net_min": 35700.0,
+    "basic_mean": 30000.0,
+    "basic_std": 0,
+    "days_present_mean": 27.0
+  }
+]
