@@ -1,0 +1,292 @@
+{
+  "JOIN-1: 5-table INNER JOIN \u2014 Full Payslip View": {
+    "rows": 30,
+    "sample": [
+      {
+        "payroll_id": 84,
+        "period_name": "March 2026",
+        "emp_code": "EMP024",
+        "employee": "Lakshmi Prasad",
+        "dept_name": "Information Technology",
+        "desig_title": "VP Engineering",
+        "grade_code": "G11",
+        "basic": 462222.22,
+        "gross": 792777.78,
+        "deductions": 203791.67,
+        "net": 588986.11,
+        "status": "Paid"
+      },
+      {
+        "payroll_id": 83,
+        "period_name": "March 2026",
+        "emp_code": "EMP023",
+        "employee": "Dinesh Sharma",
+        "dept_name": "Finance & Accounts",
+        "desig_title": "CFO",
+        "grade_code": "G15",
+        "basic": 325000.0,
+        "gross": 582500.0,
+        "deductions": 140708.33,
+        "net": 441791.67,
+        "status": "Paid"
+      }
+    ]
+  },
+  "JOIN-2: LEFT JOIN \u2014 Employees With No Payroll This Period": {
+    "rows": 30,
+    "sample": [
+      {
+        "emp_code": "EMP001",
+        "name": "Rajesh Kumar",
+        "dept_name": "Human Resources",
+        "status": "Active",
+        "payroll_status": "\u26a0 NO PAYROLL"
+      },
+      {
+        "emp_code": "EMP002",
+        "name": "Priya Sharma",
+        "dept_name": "Human Resources",
+        "status": "Active",
+        "payroll_status": "\u26a0 NO PAYROLL"
+      }
+    ]
+  },
+  "JOIN-3: SELF JOIN \u2014 Employee vs Their Manager Salary": {
+    "rows": 0,
+    "sample": []
+  },
+  "SUB-1: Scalar Subquery \u2014 vs Company Average Salary": {
+    "rows": 10,
+    "sample": [
+      {
+        "emp_code": "EMP024",
+        "name": "Lakshmi Prasad",
+        "dept_name": "Information Technology",
+        "basic_salary": 480000.0,
+        "company_avg": 101966.67,
+        "vs_avg": 378033.33
+      },
+      {
+        "emp_code": "EMP023",
+        "name": "Dinesh Sharma",
+        "dept_name": "Finance & Accounts",
+        "basic_salary": 325000.0,
+        "company_avg": 101966.67,
+        "vs_avg": 223033.33
+      }
+    ]
+  },
+  "SUB-2: IN Subquery \u2014 Depts Exceeding Budget 5%": {
+    "rows": 11,
+    "sample": [
+      {
+        "dept_code": "DEPT002",
+        "dept_name": "Finance & Accounts",
+        "budget": 3800000.0,
+        "annual_salary_cost": 4980000.0,
+        "over_budget": 1180000.0
+      },
+      {
+        "dept_code": "DEPT003",
+        "dept_name": "Information Technology",
+        "budget": 8500000.0,
+        "annual_salary_cost": 9552000.0,
+        "over_budget": 1052000.0
+      }
+    ]
+  },
+  "SUB-3: EXISTS \u2014 Employees With Active Loans": {
+    "rows": 21,
+    "sample": [
+      {
+        "emp_code": "EMP023",
+        "name": "Dinesh Sharma",
+        "dept_name": "Finance & Accounts",
+        "basic_salary": 325000.0,
+        "total_loan_outstanding": 525000.0,
+        "active_loans": 1
+      },
+      {
+        "emp_code": "EMP013",
+        "name": "Kiran Rao",
+        "dept_name": "Sales & Marketing",
+        "basic_salary": 185000.0,
+        "total_loan_outstanding": 350000.0,
+        "active_loans": 1
+      }
+    ]
+  },
+  "WIN-1: RANK & DENSE_RANK \u2014 Salary Ranking": {
+    "rows": 15,
+    "sample": [
+      {
+        "emp_code": "EMP024",
+        "name": "Lakshmi Prasad",
+        "dept_name": "Information Technology",
+        "basic_salary": 480000.0,
+        "company_rank": 1,
+        "company_dense_rank": 1,
+        "dept_rank": 1,
+        "percentile": 100.0
+      },
+      {
+        "emp_code": "EMP023",
+        "name": "Dinesh Sharma",
+        "dept_name": "Finance & Accounts",
+        "basic_salary": 325000.0,
+        "company_rank": 2,
+        "company_dense_rank": 2,
+        "dept_rank": 1,
+        "percentile": 96.6
+      }
+    ]
+  },
+  "WIN-2: LAG / LEAD \u2014 Month-over-Month Net Change": {
+    "rows": 3,
+    "sample": [
+      {
+        "period_name": "March 2026",
+        "total_net": 4064189.86,
+        "prev_net": 4066356.69,
+        "next_net": null,
+        "mom_change": -2166.83,
+        "mom_pct_change": -0.05
+      },
+      {
+        "period_name": "February 2026",
+        "total_net": 4066356.69,
+        "prev_net": 4112566.54,
+        "next_net": 4064189.86,
+        "mom_change": -46209.85,
+        "mom_pct_change": -1.12
+      }
+    ]
+  },
+  "WIN-3: RUNNING TOTAL & MOVING AVERAGE": {
+    "rows": 3,
+    "sample": [
+      {
+        "period_name": "January 2026",
+        "net": 4112566.54,
+        "running_total": 4112566.54,
+        "moving_avg_3m": 4112566.54
+      },
+      {
+        "period_name": "February 2026",
+        "net": 4066356.69,
+        "running_total": 8178923.23,
+        "moving_avg_3m": 4089461.62
+      }
+    ]
+  },
+  "WIN-4: NTILE & Salary Quartiles": {
+    "rows": 30,
+    "sample": [
+      {
+        "emp_code": "EMP024",
+        "name": "Lakshmi Prasad",
+        "dept_name": "Information Technology",
+        "basic_salary": 480000.0,
+        "quartile": 4,
+        "percentile": 100.0,
+        "quartile_label": "Q4 Top 25%"
+      },
+      {
+        "emp_code": "EMP023",
+        "name": "Dinesh Sharma",
+        "dept_name": "Finance & Accounts",
+        "basic_salary": 325000.0,
+        "quartile": 4,
+        "percentile": 96.6,
+        "quartile_label": "Q4 Top 25%"
+      }
+    ]
+  },
+  "WIN-5: FIRST_VALUE / LAST_VALUE per Dept": {
+    "rows": 20,
+    "sample": [
+      {
+        "dept_name": "Corporate Strategy",
+        "emp_code": "EMP025",
+        "name": "Harish Chandra",
+        "basic_salary": 35000.0,
+        "highest_earner": "Harish Chandra",
+        "lowest_earner": "Harish Chandra",
+        "dept_avg": 35000.0
+      },
+      {
+        "dept_name": "Customer Support",
+        "emp_code": "EMP004",
+        "name": "Sneha Reddy",
+        "basic_salary": 30000.0,
+        "highest_earner": "Sneha Reddy",
+        "lowest_earner": "Preethi Nambiar",
+        "dept_avg": 29500.0
+      }
+    ]
+  },
+  "CTE-1: Recursive-style YTD + MoM in one query": {
+    "rows": 10,
+    "sample": [
+      {
+        "emp_id": 24,
+        "emp_code": "EMP024",
+        "name": "Lakshmi Prasad",
+        "dept_name": "Information Technology",
+        "year": 2026,
+        "months_paid": 3,
+        "ytd_net": 1785469.45,
+        "ytd_tds": 613308.33,
+        "avg_monthly_net": 595156.48,
+        "max_monthly_net": 610141.67,
+        "min_monthly_net": 586341.67,
+        "effective_tax_rate_pct": 34.35,
+        "ytd_rank": 1
+      },
+      {
+        "emp_id": 23,
+        "emp_code": "EMP023",
+        "name": "Dinesh Sharma",
+        "dept_name": "Finance & Accounts",
+        "year": 2026,
+        "months_paid": 3,
+        "ytd_net": 1309260.42,
+        "ytd_tds": 409218.74,
+        "avg_monthly_net": 436420.14,
+        "max_monthly_net": 441791.67,
+        "min_monthly_net": 425677.08,
+        "effective_tax_rate_pct": 31.26,
+        "ytd_rank": 2
+      }
+    ]
+  },
+  "CTE-2: Payroll Cost vs Budget Report": {
+    "rows": 12,
+    "sample": [
+      {
+        "dept_code": "DEPT003",
+        "dept_name": "Information Technology",
+        "location": "Bengaluru",
+        "headcount": 5,
+        "monthly_gross": 1276234.81,
+        "employer_burden": 9000.0,
+        "projected_annual_cost": 15314817.72,
+        "approved_budget": 8500000.0,
+        "budget_variance": 6814817.72,
+        "budget_status": "\ud83d\udd34 Over Budget"
+      },
+      {
+        "dept_code": "DEPT002",
+        "dept_name": "Finance & Accounts",
+        "location": "Mumbai",
+        "headcount": 3,
+        "monthly_gross": 712546.66,
+        "employer_burden": 5400.0,
+        "projected_annual_cost": 8550559.92,
+        "approved_budget": 3800000.0,
+        "budget_variance": 4750559.92,
+        "budget_status": "\ud83d\udd34 Over Budget"
+      }
+    ]
+  }
+}
