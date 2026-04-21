@@ -1,0 +1,94 @@
+{
+  "run_time": "2026-04-19T10:17:52.655561",
+  "tasks_run": 12,
+  "succeeded": 10,
+  "failed": 2,
+  "score_pct": 83.3,
+  "total_time_s": 36.8,
+  "results": [
+    {
+      "status": "success",
+      "task": 1,
+      "title": "Linux + File System Setup",
+      "elapsed_s": 0.21,
+      "file": "01_linux_filesystem/filesystem_task.py"
+    },
+    {
+      "status": "success",
+      "task": 2,
+      "title": "Networking & API Simulation",
+      "elapsed_s": 0.87,
+      "file": "02_networking/networking_task.py"
+    },
+    {
+      "status": "success",
+      "task": 3,
+      "title": "Python Basics \u2014 CSV Merge",
+      "elapsed_s": 0.03,
+      "file": "03_python_basics/python_basics_task.py"
+    },
+    {
+      "status": "success",
+      "task": 4,
+      "title": "Advanced Python Modules",
+      "elapsed_s": 0.16,
+      "file": "04_advanced_python/advanced_python_task.py"
+    },
+    {
+      "status": "success",
+      "task": 5,
+      "title": "Pandas + NumPy (1.2M rows)",
+      "elapsed_s": 34.36,
+      "file": "05_pandas_numpy/pandas_numpy_task.py"
+    },
+    {
+      "status": "success",
+      "task": 6,
+      "title": "SQL Basics \u2014 SELECT/WHERE/GROUP BY",
+      "elapsed_s": 0.06,
+      "file": "06_sql_basics/sql_tasks_06_07_08.py"
+    },
+    {
+      "status": "failed",
+      "task": 7,
+      "title": "Advanced SQL \u2014 Joins/Windows/CTEs",
+      "elapsed_s": 0.03,
+      "error": "misuse of window function NTILE()"
+    },
+    {
+      "status": "failed",
+      "task": 8,
+      "title": "DB Concepts \u2014 OLTP vs OLAP",
+      "elapsed_s": 0.12,
+      "error": "table olap_fact_payroll has 30 columns but 29 values were supplied"
+    },
+    {
+      "status": "success",
+      "task": 9,
+      "title": "Data Warehousing \u2014 Star Schema",
+      "elapsed_s": 0.41,
+      "file": "09_data_warehousing/dw_etl_ingestion.py"
+    },
+    {
+      "status": "success",
+      "task": 10,
+      "title": "ETL vs ELT Pipelines",
+      "elapsed_s": 0.12,
+      "file": "10_etl_elt/etl_elt_task.py"
+    },
+    {
+      "status": "success",
+      "task": 11,
+      "title": "Batch Data Ingestion",
+      "elapsed_s": 0.14,
+      "file": "11_data_ingestion/ingestion_task.py"
+    },
+    {
+      "status": "success",
+      "task": 12,
+      "title": "Hadoop HDFS Simulation",
+      "elapsed_s": 0.27,
+      "file": "12_hadoop/hadoop_spark_tasks.py"
+    }
+  ]
+}

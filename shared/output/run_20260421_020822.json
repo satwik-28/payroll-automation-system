@@ -1,0 +1,220 @@
+{
+  "run_time": "2026-04-21T02:08:22.936043",
+  "tasks_run": 30,
+  "succeeded": 30,
+  "failed": 0,
+  "score_pct": 100.0,
+  "total_time_s": 57.6,
+  "results": [
+    {
+      "status": "success",
+      "task": 1,
+      "title": "Linux + File System Setup",
+      "elapsed_s": 0.09,
+      "file": "01_linux_filesystem/filesystem_task.py"
+    },
+    {
+      "status": "success",
+      "task": 2,
+      "title": "Networking & API Simulation",
+      "elapsed_s": 0.2,
+      "file": "02_networking/networking_task.py"
+    },
+    {
+      "status": "success",
+      "task": 3,
+      "title": "Python Basics \u2014 CSV Merge",
+      "elapsed_s": 0.01,
+      "file": "03_python_basics/python_basics_task.py"
+    },
+    {
+      "status": "success",
+      "task": 4,
+      "title": "Advanced Python Modules",
+      "elapsed_s": 0.02,
+      "file": "04_advanced_python/advanced_python_task.py"
+    },
+    {
+      "status": "success",
+      "task": 5,
+      "title": "Pandas + NumPy (1.2M rows)",
+      "elapsed_s": 25.38,
+      "file": "05_pandas_numpy/pandas_numpy_task.py"
+    },
+    {
+      "status": "success",
+      "task": 6,
+      "title": "SQL Basics \u2014 SELECT/WHERE/GROUP BY",
+      "elapsed_s": 0.05,
+      "file": "06_sql_basics/sql_tasks_06_07_08.py"
+    },
+    {
+      "status": "success",
+      "task": 7,
+      "title": "Advanced SQL \u2014 Joins/Windows/CTEs",
+      "elapsed_s": 0.02,
+      "file": "07_advanced_sql/advanced_sql_task.py"
+    },
+    {
+      "status": "success",
+      "task": 8,
+      "title": "DB Concepts \u2014 OLTP vs OLAP",
+      "elapsed_s": 0.22,
+      "file": "08_database_concepts/db_concepts_task.py"
+    },
+    {
+      "status": "success",
+      "task": 9,
+      "title": "Data Warehousing \u2014 Star Schema",
+      "elapsed_s": 0.23,
+      "file": "09_data_warehousing/dw_etl_ingestion.py"
+    },
+    {
+      "status": "success",
+      "task": 10,
+      "title": "ETL vs ELT Pipelines",
+      "elapsed_s": 0.04,
+      "file": "10_etl_elt/etl_elt_task.py"
+    },
+    {
+      "status": "success",
+      "task": 11,
+      "title": "Batch Data Ingestion",
+      "elapsed_s": 0.06,
+      "file": "11_data_ingestion/ingestion_task.py"
+    },
+    {
+      "status": "success",
+      "task": 12,
+      "title": "Hadoop HDFS Simulation",
+      "elapsed_s": 0.02,
+      "file": "12_hadoop/hadoop_spark_tasks.py"
+    },
+    {
+      "status": "success",
+      "task": 13,
+      "title": "HDFS Architecture Deep Dive",
+      "elapsed_s": 0.16,
+      "file": "13_hdfs_architecture/hdfs_arch_task.py"
+    },
+    {
+      "status": "success",
+      "task": 14,
+      "title": "Spark Basics \u2014 RDD Operations",
+      "elapsed_s": 0.06,
+      "file": "14_spark_basics/task_14.py"
+    },
+    {
+      "status": "success",
+      "task": 15,
+      "title": "Spark DataFrames",
+      "elapsed_s": 0.02,
+      "file": "15_spark_dataframes/task_15.py"
+    },
+    {
+      "status": "success",
+      "task": 16,
+      "title": "Spark SQL Queries",
+      "elapsed_s": 0.06,
+      "file": "16_spark_sql/task_16.py"
+    },
+    {
+      "status": "success",
+      "task": 17,
+      "title": "PySpark Advanced \u2014 Partitioning",
+      "elapsed_s": 0.02,
+      "file": "17_pyspark_advanced/task_17.py"
+    },
+    {
+      "status": "success",
+      "task": 18,
+      "title": "Streaming Concepts",
+      "elapsed_s": 5.53,
+      "file": "18_streaming_concepts/streaming_kafka_tasks.py"
+    },
+    {
+      "status": "success",
+      "task": 19,
+      "title": "Kafka Producer-Consumer",
+      "elapsed_s": 5.53,
+      "file": "19_kafka_basics/task_19.py"
+    },
+    {
+      "status": "success",
+      "task": 20,
+      "title": "Kafka Advanced \u2014 Offsets",
+      "elapsed_s": 5.53,
+      "file": "20_kafka_advanced/task_20.py"
+    },
+    {
+      "status": "success",
+      "task": 21,
+      "title": "Spark Structured Streaming",
+      "elapsed_s": 5.53,
+      "file": "21_structured_streaming/task_21.py"
+    },
+    {
+      "status": "success",
+      "task": 22,
+      "title": "Airflow DAG",
+      "elapsed_s": 2.85,
+      "file": "22_airflow_basics/airflow_tasks.py"
+    },
+    {
+      "status": "success",
+      "task": 23,
+      "title": "Airflow Advanced \u2014 SLA+Monitoring",
+      "elapsed_s": 2.83,
+      "file": "23_airflow_advanced/task_23.py"
+    },
+    {
+      "status": "success",
+      "task": 24,
+      "title": "Cloud AWS/GCP/Azure Comparison",
+      "elapsed_s": 0.74,
+      "file": "24_cloud_basics/cloud_tasks.py"
+    },
+    {
+      "status": "success",
+      "task": 25,
+      "title": "Cloud Storage \u2014 S3 Simulation",
+      "elapsed_s": 0.75,
+      "file": "25_cloud_storage/task_25.py"
+    },
+    {
+      "status": "success",
+      "task": 26,
+      "title": "Cloud Compute \u2014 EC2 Deploy",
+      "elapsed_s": 0.74,
+      "file": "26_cloud_compute/task_26.py"
+    },
+    {
+      "status": "success",
+      "task": 27,
+      "title": "Cloud DW \u2014 BigQuery/Redshift",
+      "elapsed_s": 0.74,
+      "file": "27_data_warehouse_cloud/task_27.py"
+    },
+    {
+      "status": "success",
+      "task": 28,
+      "title": "Delta Lake / Iceberg Lakehouse",
+      "elapsed_s": 0.03,
+      "file": "28_lakehouse/lakehouse_dq_tasks.py"
+    },
+    {
+      "status": "success",
+      "task": 29,
+      "title": "Data Quality & Anomaly Detection",
+      "elapsed_s": 0.08,
+      "file": "29_data_quality/data_quality_task.py"
+    },
+    {
+      "status": "success",
+      "task": 30,
+      "title": "Final E2E Pipeline + Dashboard",
+      "elapsed_s": 0.04,
+      "file": "30_final_project/final_pipeline.py"
+    }
+  ]
+}
