@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+{% block title %}Leave Management{% endblock %}
+{% block page_title %}Leave Management{% endblock %}
+{% block breadcrumb %}People / Leave Requests{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-16" style="flex-wrap:wrap;gap:10px">
+  <div class="tabs" id="leave-tabs" style="margin:0;border:none">
+    <div class="tab active" data-tab="tab-requests">All Requests</div>
+    <div class="tab" data-tab="tab-pending">Pending Approval</div>
+    <div class="tab" data-tab="tab-calendar">Leave Calendar</div>
+  </div>
+  <button class="btn btn-primary" onclick="openModal('modal-apply')">＋ Apply Leave</button>
+</div>
+
+<!-- Summary stats -->
+<div class="stats-grid" id="leave-stats" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px"></div>
+
+<!-- All Requests Tab -->
+<div id="tab-requests" class="tab-panel active">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">All Leave Requests</div>
+      <div class="card-actions">
+        <select class="form-control" id="filter-status" onchange="loadLeaves()" style="width:130px">
+          <option value="">All Status</option>
+          <option>Pending</option><option>Approved</option><option>Rejected</option><option>Cancelled</option>
+        </select>
+        <span id="leave-count" class="badge badge-gray">—</span>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Employee</th><th>Department</th><th>Leave Type</th>
+          <th>From</th><th>To</th><th class="num">Days</th>
+          <th>Status</th><th>Reason</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="leave-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Pending Tab -->
+<div id="tab-pending" class="tab-panel">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Pending Approval</div>
+      <div class="card-actions">
+        <button class="btn btn-sm btn-primary" onclick="approveAll()">✓ Approve All</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Employee</th><th>Department</th><th>Leave Type</th>
+          <th>From</th><th>To</th><th class="num">Days</th><th>Reason</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="pending-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Calendar Tab -->
+<div id="tab-calendar" class="tab-panel">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Leave Calendar (Next 30 Days)</div></div>
+    <div class="card-body" id="cal-body">
+      <div class="page-loader"><div class="loader big-loader"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Apply Leave Modal -->
+<div class="modal-overlay" id="modal-apply">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <div class="modal-title">Apply for Leave</div>
+      <button class="modal-close" onclick="closeModal('modal-apply')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid" style="gap:14px">
+        <div class="form-group">
+          <label class="form-label">Employee *</label>
+          <select class="form-control" id="lv-emp"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Leave Type *</label>
+          <select class="form-control" id="lv-type"></select>
+        </div>
+        <div class="form-grid form-grid-2">
+          <div class="form-group">
+            <label class="form-label">From Date *</label>
+            <input class="form-control" type="date" id="lv-from" onchange="calcDays()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">To Date *</label>
+            <input class="form-control" type="date" id="lv-to" onchange="calcDays()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Days Requested</label>
+          <input class="form-control" type="number" id="lv-days" readonly style="opacity:.7">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Reason *</label>
+          <input class="form-control" id="lv-reason" placeholder="Brief reason for leave">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-apply')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitLeave()">Submit</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let allLeaves = [];
+
+async function init() {
+  initTabs(document.body.querySelector('.tabs').parentElement);
+
+  // Load dropdowns
+  const [emps, types] = await Promise.all([
+    fetch('/api/employees?status=Active').then(r=>r.json()),
+    fetch('/api/leave/types').then(r=>r.json()),
+  ]);
+
+  document.getElementById('lv-emp').innerHTML =
+    emps.map(e=>`<option value="${e.emp_id}">${e.emp_code} — ${e.full_name}</option>`).join('');
+  document.getElementById('lv-type').innerHTML =
+    types.map(t=>`<option value="${t.leave_type_id}">${t.leave_name} (${t.leave_code}) — max ${t.max_days_year}d/yr</option>`).join('');
+
+  // Set default dates
+  const today = new Date().toISOString().slice(0,10);
+  document.getElementById('lv-from').value = today;
+  document.getElementById('lv-to').value   = today;
+  calcDays();
+  await loadLeaves();
+  loadCalendar();
+}
+
+function calcDays() {
+  const from = new Date(document.getElementById('lv-from').value);
+  const to   = new Date(document.getElementById('lv-to').value);
+  if (from && to && to >= from) {
+    const diff = Math.round((to - from) / 86400000) + 1;
+    document.getElementById('lv-days').value = diff;
+  }
+}
+
+async function loadLeaves() {
+  const status = document.getElementById('filter-status')?.value || '';
+  allLeaves = await fetch('/api/leave/requests').then(r=>r.json());
+  const filtered = status ? allLeaves.filter(r=>r.status===status) : allLeaves;
+  document.getElementById('leave-count').textContent = `${filtered.length} requests`;
+
+  // Stats
+  const stats = {Pending:0, Approved:0, Rejected:0, total_days:0};
+  allLeaves.forEach(r => {
+    if (stats[r.status] !== undefined) stats[r.status]++;
+    stats.total_days += r.days_requested || 0;
+  });
+  document.getElementById('leave-stats').innerHTML = `
+    <div class="stat-card gold"><div class="stat-label">Total Requests</div><div class="stat-value">${allLeaves.length}</div></div>
+    <div class="stat-card orange"><div class="stat-label">Pending</div><div class="stat-value">${stats.Pending}</div></div>
+    <div class="stat-card green"><div class="stat-label">Approved</div><div class="stat-value">${stats.Approved}</div></div>
+    <div class="stat-card red"><div class="stat-label">Rejected</div><div class="stat-value">${stats.Rejected}</div></div>
+    <div class="stat-card blue"><div class="stat-label">Total Days</div><div class="stat-value">${stats.total_days}</div></div>
+  `;
+
+  // All requests table
+  document.getElementById('leave-tbody').innerHTML = filtered.map(r=>`<tr>
+    <td style="font-weight:500">${r.name}<br><span class="text-muted text-xs mono">${r.emp_code}</span></td>
+    <td class="text-muted text-sm">${r.dept_name}</td>
+    <td><span class="badge badge-blue">${r.leave_code}</span><br><span class="text-xs text-muted">${r.leave_name}</span></td>
+    <td class="mono text-sm">${r.start_date}</td>
+    <td class="mono text-sm">${r.end_date}</td>
+    <td class="num mono">${r.days_requested}</td>
+    <td>${statusBadge(r.status)}</td>
+    <td class="text-sm" style="max-width:150px;overflow:hidden;text-overflow:ellipsis">${r.reason}</td>
+    <td>
+      ${r.status==='Pending'?`
+        <div class="flex gap-8">
+          <button class="btn btn-xs btn-primary" onclick="doApprove(${r.leave_id},'Approved')">✓</button>
+          <button class="btn btn-xs btn-danger"  onclick="doApprove(${r.leave_id},'Rejected')">✗</button>
+        </div>`:
+      `<span class="text-muted text-xs">${r.approved_at ? r.approved_at.slice(0,10) : '—'}</span>`}
+    </td>
+  </tr>`).join('') || '<tr><td colspan="9"><div class="empty"><div>No requests found</div></div></td></tr>';
+
+  // Pending table
+  const pending = allLeaves.filter(r=>r.status==='Pending');
+  document.getElementById('pending-tbody').innerHTML = pending.map(r=>`<tr>
+    <td style="font-weight:500">${r.name}</td>
+    <td class="text-muted text-sm">${r.dept_name}</td>
+    <td><span class="badge badge-blue">${r.leave_code}</span></td>
+    <td class="mono">${r.start_date}</td>
+    <td class="mono">${r.end_date}</td>
+    <td class="num">${r.days_requested}</td>
+    <td class="text-sm">${r.reason}</td>
+    <td>
+      <div class="flex gap-8">
+        <button class="btn btn-xs btn-primary" onclick="doApprove(${r.leave_id},'Approved')">✓ Approve</button>
+        <button class="btn btn-xs btn-danger"  onclick="doApprove(${r.leave_id},'Rejected')">✗ Reject</button>
+      </div>
+    </td>
+  </tr>`).join('') || '<tr><td colspan="8"><div class="empty"><div class="empty-icon">✓</div><div>No pending requests</div></div></td></tr>';
+}
+
+async function loadCalendar() {
+  const events = await fetch('/api/dashboard/leave-calendar').then(r=>r.json());
+  const colors = {CL:'#f0b429',SL:'#ef4444',PL:'#22c55e',ML:'#a855f7',PAL:'#06b6d4',EL:'#3b82f6'};
+  document.getElementById('cal-body').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${events.length === 0 ? '<div class="empty"><div>No upcoming leaves</div></div>' :
+        events.map(e => {
+          const color = colors[e.leave_code] || '#8a9ab5';
+          return `<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-left:3px solid ${color};border-radius:8px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text2);width:120px">${e.start_date} → ${e.end_date}</div>
+            <div style="font-weight:600">${e.name}</div>
+            <span class="badge badge-blue">${e.leave_code}</span>
+            <span class="text-sm text-muted">${e.days_requested} day${e.days_requested>1?'s':''}</span>
+            <span style="margin-left:auto">${statusBadge(e.status)}</span>
+            <span class="text-sm text-muted" style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${e.reason}</span>
+          </div>`;
+        }).join('')}
+    </div>`;
+}
+
+async function doApprove(lid, action) {
+  await fetch(`/api/leave/requests/${lid}/approve`, {method:'PATCH',
+    headers:{'Content-Type':'application/json'}, body:JSON.stringify({action})});
+  toast(`Leave ${action}`,'success');
+  loadLeaves();
+}
+
+async function approveAll() {
+  const pending = allLeaves.filter(r=>r.status==='Pending');
+  await Promise.all(pending.map(r =>
+    fetch(`/api/leave/requests/${r.leave_id}/approve`, {method:'PATCH',
+      headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'Approved'})})
+  ));
+  toast(`${pending.length} requests approved`,'success');
+  loadLeaves();
+}
+
+async function submitLeave() {
+  const data = {
+    emp_id:       document.getElementById('lv-emp').value,
+    leave_type_id:document.getElementById('lv-type').value,
+    start_date:   document.getElementById('lv-from').value,
+    end_date:     document.getElementById('lv-to').value,
+    days_requested:document.getElementById('lv-days').value,
+    reason:       document.getElementById('lv-reason').value,
+  };
+  if (!data.reason) { toast('Please enter a reason','error'); return; }
+  const r = await fetch('/api/leave/requests', {method:'POST',
+    headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)}).then(r=>r.json());
+  if (r.success) { toast('Leave applied successfully','success'); closeModal('modal-apply'); loadLeaves(); }
+  else toast(r.error,'error');
+}
+
+init();
+</script>
+{% endblock %}

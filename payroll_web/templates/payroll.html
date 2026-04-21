@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+{% block title %}Payroll{% endblock %}
+{% block page_title %}Payroll{% endblock %}
+{% block breadcrumb %}Finance / Payroll Management{% endblock %}
+
+{% block content %}
+<div class="grid-2" style="gap:20px;align-items:start">
+  <!-- PERIODS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Payroll Periods</div>
+      <div class="card-actions">
+        <button class="btn btn-sm btn-secondary" onclick="loadPeriods()">↻ Refresh</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Period</th><th>Working Days</th><th>Records</th><th>Total Net</th><th>Status</th><th></th></tr></thead>
+        <tbody id="period-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PERIOD ACTIONS -->
+  <div>
+    <div class="card" id="period-actions" style="display:none">
+      <div class="card-header">
+        <div>
+          <div class="card-title" id="selected-period-name">—</div>
+          <div class="card-subtitle">Payroll Actions</div>
+        </div>
+        <div class="card-actions">
+          <span id="period-status-badge"></span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <button class="btn btn-primary" id="btn-generate" onclick="generatePayroll()">
+            ▶ Generate Payroll
+          </button>
+          <button class="btn btn-secondary" id="btn-approve" onclick="approvePayroll()">
+            ✓ Approve All
+          </button>
+          <button class="btn btn-secondary" id="btn-markpaid" onclick="openMarkPaid()">
+            💳 Mark as Paid
+          </button>
+          <button class="btn btn-secondary" onclick="exportCsv()">
+            ↓ Export CSV
+          </button>
+        </div>
+
+        <!-- Summary stats -->
+        <hr class="divider">
+        <div id="period-stats" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="period-placeholder">
+      <div class="card-body">
+        <div class="empty">
+          <div class="empty-icon">💰</div>
+          <div class="empty-text">Select a payroll period to manage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAYROLL REGISTER -->
+<div class="card" id="register-card" style="display:none">
+  <div class="card-header">
+    <div>
+      <div class="card-title" id="register-title">Payroll Register</div>
+      <div class="card-subtitle" id="register-sub"></div>
+    </div>
+    <div class="card-actions">
+      <input class="form-control" id="reg-search" placeholder="Search…" oninput="filterRegister()" style="width:180px">
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th><th>Employee</th><th>Dept</th>
+          <th class="num">Basic</th><th class="num">Gross</th>
+          <th class="num">PF</th><th class="num">TDS</th><th class="num">Deductions</th>
+          <th class="num">Net</th><th>Status</th><th>Payslip</th>
+        </tr>
+      </thead>
+      <tbody id="reg-tbody"></tbody>
+    </table>
+  </div>
+  <div style="padding:12px 20px;background:var(--bg3);border-top:1px solid var(--border);display:flex;gap:24px;font-family:'IBM Plex Mono',monospace;font-size:12px">
+    <span>Employees: <b id="reg-count">—</b></span>
+    <span>Gross: <b id="reg-gross" class="text-gold">—</b></span>
+    <span>Deductions: <b id="reg-ded" class="text-red">—</b></span>
+    <span>Net Paid: <b id="reg-net" class="text-green">—</b></span>
+  </div>
+</div>
+
+<!-- PAYSLIP MODAL -->
+<div class="modal-overlay" id="modal-payslip">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <div class="modal-title">Salary Slip</div>
+      <button class="modal-close" onclick="closeModal('modal-payslip')">✕</button>
+    </div>
+    <div class="modal-body payslip" id="payslip-body">
+      <div class="page-loader"><div class="loader big-loader"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MARK PAID MODAL -->
+<div class="modal-overlay" id="modal-markpaid">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <div class="modal-title">Mark Payroll as Paid</div>
+      <button class="modal-close" onclick="closeModal('modal-markpaid')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Payment Date</label>
+        <input class="form-control" type="date" id="pay-date" value="">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-markpaid')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmMarkPaid()">Confirm Payment</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let currentPid = null, registerData = [];
+
+async function loadPeriods() {
+  const periods = await fetch('/api/payroll/periods').then(r=>r.json());
+  document.getElementById('period-tbody').innerHTML = periods.map(p=>`
+    <tr class="cursor-pointer ${p.period_id==currentPid?'highlight-row':''}" onclick="selectPeriod(${p.period_id},'${p.period_name}','${p.status}',${p.records||0},${p.total_net||0},${p.working_days})">
+      <td style="font-weight:600">${p.period_name}</td>
+      <td class="mono">${p.working_days}</td>
+      <td class="mono">${p.records||0}</td>
+      <td class="num">${fmtK(p.total_net||0)}</td>
+      <td>${statusBadge(p.status)}</td>
+      <td><button class="btn btn-xs btn-secondary">Select</button></td>
+    </tr>
+  `).join('');
+}
+
+async function selectPeriod(pid, name, status, records, net, wdays) {
+  currentPid = pid;
+  document.getElementById('selected-period-name').textContent = name;
+  document.getElementById('period-status-badge').innerHTML = statusBadge(status);
+  document.getElementById('period-actions').style.display = '';
+  document.getElementById('period-placeholder').style.display = 'none';
+  document.getElementById('period-stats').innerHTML = `
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <div class="stat-label">Records</div>
+      <div class="stat-value" style="font-size:20px">${records}</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <div class="stat-label">Total Net</div>
+      <div class="stat-value" style="font-size:16px">${fmtK(net)}</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <div class="stat-label">Working Days</div>
+      <div class="stat-value" style="font-size:20px">${wdays}</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <div class="stat-label">Status</div>
+      <div style="margin-top:4px">${statusBadge(status)}</div>
+    </div>
+  `;
+  loadPeriods();
+  if(records>0) loadRegister(pid, name);
+}
+
+async function loadRegister(pid, name) {
+  document.getElementById('register-card').style.display = '';
+  document.getElementById('register-title').textContent = `Payroll Register — ${name}`;
+  document.getElementById('reg-tbody').innerHTML = '<tr><td colspan="11"><div class="page-loader"><div class="loader"></div></div></td></tr>';
+  registerData = await fetch(`/api/payroll/register/${pid}`).then(r=>r.json());
+  renderRegister(registerData);
+}
+
+function renderRegister(rows) {
+  let tg=0, td=0, tn=0;
+  document.getElementById('reg-tbody').innerHTML = rows.map(r=>{
+    tg+=r.gross_salary; td+=r.total_deductions; tn+=r.net_salary;
+    return `<tr>
+      <td class="mono text-gold">${r.emp_code||''}</td>
+      <td style="font-weight:500">${r.name}</td>
+      <td class="text-muted text-sm">${r.dept_name}</td>
+      <td class="num">${fmt(r.basic_salary)}</td>
+      <td class="num">${fmt(r.gross_salary)}</td>
+      <td class="num text-muted">${fmt(r.pf_employee)}</td>
+      <td class="num text-muted">${fmt(r.income_tax_tds)}</td>
+      <td class="num text-red">${fmt(r.total_deductions)}</td>
+      <td class="num text-green fw-600">${fmt(r.net_salary)}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td><button class="btn btn-xs btn-secondary" onclick="viewPayslip(${currentPid},\'${r.emp_code}\')">Slip</button></td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="11"><div class="empty"><div>No records</div></div></td></tr>';
+  document.getElementById('reg-count').textContent = rows.length;
+  document.getElementById('reg-gross').textContent = fmtK(tg);
+  document.getElementById('reg-ded').textContent   = fmtK(td);
+  document.getElementById('reg-net').textContent   = fmtK(tn);
+  document.getElementById('register-sub').textContent = `${rows.length} employees`;
+}
+
+function filterRegister() {
+  const q = document.getElementById('reg-search').value.toLowerCase();
+  renderRegister(registerData.filter(r=>r.name.toLowerCase().includes(q)||r.emp_code.toLowerCase().includes(q)||r.dept_name.toLowerCase().includes(q)));
+}
+
+async function viewPayslip(pid, empCode) {
+  // find emp_id from register data
+  const row = registerData.find(r=>r.emp_code===empCode);
+  if(!row) return;
+  openModal('modal-payslip');
+  // need emp_id — fetch from employees
+  const emps = await fetch(`/api/employees?q=${empCode}`).then(r=>r.json());
+  if(!emps.length) return;
+  const d = await fetch(`/api/payroll/payslip/${emps[0].emp_id}/${pid}`).then(r=>r.json());
+  if(!d.emp_code) { document.getElementById('payslip-body').innerHTML='<p>Not found</p>'; return; }
+  document.getElementById('payslip-body').innerHTML = `
+    <div class="payslip-header">
+      <div class="payslip-company">PayrollWise Ltd</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px">Salary Slip for ${d.period_name}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:14px">
+      ${ps('Employee Code',d.emp_code)} ${ps('Period',d.period_name)}
+      ${ps('Name',d.name)} ${ps('Department',d.dept_name)}
+      ${ps('Designation',d.desig_title)} ${ps('Grade',d.grade_name)}
+      ${ps('PAN',d.pan_number)} ${ps('Bank',d.bank_name)}
+      ${ps('Days Present',d.days_present)} ${ps('Days Absent',d.days_absent)}
+    </div>
+    <div class="payslip-grid">
+      <div class="payslip-section">
+        <div style="font-size:10px;font-weight:700;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">Earnings</div>
+        ${prow('Basic Salary', fmt(d.basic_salary))}
+        ${prow('HRA', fmt(d.hra))}
+        ${prow('Dearness Allowance', fmt(d.da))}
+        ${prow('Transport Allow.', fmt(d.transport_allow))}
+        ${prow('Other Allowances', fmt(d.other_allowances))}
+        <div class="payslip-total"><span>Gross</span><span class="text-gold">${fmt(d.gross_salary)}</span></div>
+      </div>
+      <div class="payslip-section">
+        <div style="font-size:10px;font-weight:700;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">Deductions</div>
+        ${prow('PF (Employee)', fmt(d.pf_employee))}
+        ${prow('ESI (Employee)', fmt(d.esi_employee))}
+        ${prow('Professional Tax', fmt(d.professional_tax))}
+        ${prow('Income Tax (TDS)', fmt(d.income_tax_tds))}
+        ${prow('Loan EMI', fmt(d.loan_deduction))}
+        ${prow('Other', fmt(d.other_deductions))}
+        <div class="payslip-total"><span>Total Deductions</span><span class="text-red">${fmt(d.total_deductions)}</span></div>
+      </div>
+    </div>
+    <div class="payslip-net">
+      <div class="payslip-net-label">Net Salary (Take Home)</div>
+      <div class="payslip-net-value">${fmt(d.net_salary)}</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px">Payment: ${d.payment_date||'—'} · ${statusBadge(d.status)}</div>
+    </div>
+  `;
+}
+function ps(l,v){return `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 10px"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">${l}</div><div style="font-size:12px;margin-top:2px">${v||'—'}</div></div>`;}
+function prow(l,v){return `<div class="payslip-row"><span>${l}</span><span>${v}</span></div>`;}
+
+async function generatePayroll() {
+  if(!currentPid) return;
+  document.getElementById('btn-generate').innerHTML = '<span class="loader"></span> Generating…';
+  const r = await fetch(`/api/payroll/generate/${currentPid}`,{method:'POST'}).then(r=>r.json());
+  document.getElementById('btn-generate').innerHTML = '▶ Generate Payroll';
+  if(r.error) { toast(r.error,'error'); return; }
+  toast(`Generated for ${r.success?.length||0} employees`,'success');
+  selectPeriod(currentPid, document.getElementById('selected-period-name').textContent, 'Draft', r.success?.length||0, 0, 26);
+}
+
+async function approvePayroll() {
+  if(!currentPid) return;
+  const r = await fetch(`/api/payroll/approve/${currentPid}`,{method:'POST'}).then(r=>r.json());
+  toast(`Approved ${r.approved} records`,'success');
+  loadPeriods();
+}
+
+function openMarkPaid() {
+  document.getElementById('pay-date').value = new Date().toISOString().slice(0,10);
+  openModal('modal-markpaid');
+}
+async function confirmMarkPaid() {
+  const pd = document.getElementById('pay-date').value;
+  const r = await fetch(`/api/payroll/mark-paid/${currentPid}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payment_date:pd})}).then(r=>r.json());
+  toast(`${r.paid} records marked as Paid`,'success');
+  closeModal('modal-markpaid');
+  loadPeriods();
+}
+
+function exportCsv() {
+  if(!currentPid) return;
+  window.location.href = `/api/payroll/export/${currentPid}`;
+  toast('CSV download started','info');
+}
+
+loadPeriods();
+</script>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}Salary Revisions{% endblock %}
+{% block page_title %}Salary Revisions{% endblock %}
+{% block breadcrumb %}Finance / Increment & Revision History{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-16">
+  <div></div>
+  <button class="btn btn-primary" onclick="openModal('modal-revision')">＋ Add Revision</button>
+</div>
+
+<!-- Hike distribution chart -->
+<div class="card mb-16">
+  <div class="card-header"><div class="card-title">Hike Distribution</div><div class="card-subtitle">All salary revisions</div></div>
+  <div class="card-body">
+    <div class="bar-chart" id="hike-bars"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">Revision History</div>
+    <div class="card-actions"><span id="rev-count" class="badge badge-gray">—</span></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Code</th><th>Employee</th><th>Department</th><th class="num">Old Basic</th><th class="num">New Basic</th><th class="num">% Hike</th><th>Effective</th><th>Reason</th></tr></thead>
+      <tbody id="rev-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Revision Modal -->
+<div class="modal-overlay" id="modal-revision">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <div class="modal-title">Add Salary Revision</div>
+      <button class="modal-close" onclick="closeModal('modal-revision')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid" style="gap:14px">
+        <div class="form-group"><label class="form-label">Employee *</label>
+          <select class="form-control" id="rev-emp" onchange="loadEmpBasic()"></select></div>
+        <div class="form-group"><label class="form-label">Current Basic (₹)</label>
+          <input class="form-control" id="rev-old" readonly style="opacity:.7"></div>
+        <div class="form-group"><label class="form-label">New Basic Salary (₹) *</label>
+          <input class="form-control" type="number" id="rev-new" oninput="calcHike()"></div>
+        <div class="form-group"><label class="form-label">Hike %</label>
+          <input class="form-control" id="rev-hike" readonly style="opacity:.7"></div>
+        <div class="form-group"><label class="form-label">Effective Date *</label>
+          <input class="form-control" type="date" id="rev-date"></div>
+        <div class="form-group"><label class="form-label">Reason *</label>
+          <select class="form-control" id="rev-reason">
+            <option>Annual Increment 2026</option>
+            <option>Mid-Year Revision</option>
+            <option>Promotion</option>
+            <option>Performance Recognition</option>
+            <option>Retention Bonus Revision</option>
+            <option>Market Correction</option>
+          </select></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-revision')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitRevision()">Save Revision</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let empMap = {};
+
+async function loadRevisions() {
+  const rows = await fetch('/api/reports/salary-revisions').then(r=>r.json());
+  document.getElementById('rev-count').textContent = `${rows.length} revisions`;
+  document.getElementById('rev-tbody').innerHTML = rows.map(r=>{
+    const hc = r.pct_hike > 15 ? 'text-green fw-600' : r.pct_hike < 5 ? 'text-muted' : 'text-gold';
+    return `<tr>
+      <td class="mono text-gold">${r.emp_code}</td>
+      <td style="font-weight:500">${r.name}</td>
+      <td class="text-muted text-sm">${r.dept_name}</td>
+      <td class="num">${fmt(r.old_basic)}</td>
+      <td class="num text-green">${fmt(r.new_basic)}</td>
+      <td class="num ${hc}">${r.pct_hike}%</td>
+      <td class="mono text-muted">${r.effective_date}</td>
+      <td class="text-sm">${r.reason}</td>
+    </tr>`;
+  }).join('');
+
+  // Build hike bar chart (top 10)
+  const sorted = [...rows].sort((a,b)=>b.pct_hike-a.pct_hike).slice(0,10);
+  const max = sorted[0]?.pct_hike || 1;
+  document.getElementById('hike-bars').innerHTML = sorted.map((r,i)=>{
+    const color = r.pct_hike>=15?'#22c55e':r.pct_hike>=10?'#f0b429':r.pct_hike>=5?'#3b82f6':'#6b7280';
+    return `<div class="bar-row">
+      <div class="bar-label">${r.name.split(' ')[0]} ${r.name.split(' ')[1]?.charAt(0)||''}.</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(r.pct_hike/max*100).toFixed(1)}%;background:${color}"></div></div>
+      <div class="bar-val" style="color:${color}">${r.pct_hike}%</div>
+    </div>`;
+  }).join('');
+}
+
+async function initModal() {
+  document.getElementById('rev-date').value = new Date().toISOString().slice(0,10);
+  const emps = await fetch('/api/employees?status=Active').then(r=>r.json());
+  emps.forEach(e=>{ empMap[e.emp_id]=e.basic_salary; });
+  document.getElementById('rev-emp').innerHTML = emps.map(e=>`<option value="${e.emp_id}" data-basic="${e.basic_salary}">${e.emp_code} — ${e.full_name}</option>`).join('');
+  loadEmpBasic();
+}
+
+function loadEmpBasic() {
+  const sel = document.getElementById('rev-emp');
+  const opt = sel.options[sel.selectedIndex];
+  document.getElementById('rev-old').value = opt?.dataset.basic || '';
+  calcHike();
+}
+
+function calcHike() {
+  const old = parseFloat(document.getElementById('rev-old').value)||0;
+  const nw  = parseFloat(document.getElementById('rev-new').value)||0;
+  if(old && nw) document.getElementById('rev-hike').value = ((nw-old)/old*100).toFixed(2)+'%';
+  else document.getElementById('rev-hike').value = '';
+}
+
+async function submitRevision() {
+  const empId = document.getElementById('rev-emp').value;
+  const oldBasic = parseFloat(document.getElementById('rev-old').value);
+  const newBasic = parseFloat(document.getElementById('rev-new').value);
+  const date = document.getElementById('rev-date').value;
+  const reason = document.getElementById('rev-reason').value;
+  if(!empId||!newBasic||!date) { toast('Please fill all fields','error'); return; }
+
+  // Save revision
+  const r = await fetch('/api/employees', {method:'GET'}).then(()=>
+    fetch('/api/reports/salary-revisions', {method:'GET'})
+  );
+  // Insert via inline SQL call (using a dedicated endpoint would be cleaner)
+  const res = await fetch('/api/reports/salary-revisions', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({emp_id:empId, old_basic:oldBasic, new_basic:newBasic, effective_date:date, reason})
+  });
+  // Also update employee basic salary
+  toast('Revision recorded — update employee basic salary manually if needed','info');
+  closeModal('modal-revision');
+  loadRevisions();
+}
+
+loadRevisions(); initModal();
+</script>
+{% endblock %}

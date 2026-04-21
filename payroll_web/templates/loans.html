@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}Loans{% endblock %}
+{% block page_title %}Employee Loans{% endblock %}
+{% block breadcrumb %}Finance / Loan Management{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-16">
+  <div class="flex gap-8">
+    <select class="form-control" id="loan-status" onchange="loadLoans()" style="width:150px">
+      <option value="">All Status</option><option value="Active">Active</option><option value="Closed">Closed</option><option value="Defaulted">Defaulted</option>
+    </select>
+  </div>
+  <button class="btn btn-primary" onclick="openModal('modal-loan')">＋ New Loan</button>
+</div>
+
+<!-- Summary stats -->
+<div class="stats-grid" id="loan-stats" style="grid-template-columns:repeat(4,1fr)"></div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">Loan Register</div>
+    <div class="card-actions"><span id="loan-count" class="badge badge-gray">—</span></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Code</th><th>Employee</th><th>Department</th><th>Purpose</th>
+          <th class="num">Loan Amt</th><th class="num">EMI</th>
+          <th>EMIs</th><th class="num">Outstanding</th><th>Status</th></tr>
+      </thead>
+      <tbody id="loan-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Loan Modal -->
+<div class="modal-overlay" id="modal-loan">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <div class="modal-title">Add Employee Loan</div>
+      <button class="modal-close" onclick="closeModal('modal-loan')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid" style="gap:14px">
+        <div class="form-group">
+          <label class="form-label">Employee *</label>
+          <select class="form-control" id="l-emp"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Loan Amount (₹) *</label>
+          <input class="form-control" type="number" id="l-amount" oninput="calcEmi()">
+        </div>
+        <div class="form-grid form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Loan Date *</label>
+            <input class="form-control" type="date" id="l-date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Total EMIs *</label>
+            <input class="form-control" type="number" id="l-emis" value="12" oninput="calcEmi()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">EMI Amount (₹) — Auto-calculated</label>
+          <input class="form-control" type="number" id="l-emi" readonly style="opacity:.7">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Purpose *</label>
+          <input class="form-control" id="l-purpose" placeholder="e.g. Medical emergency">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-loan')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitLoan()">Create Loan</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function loadLoans() {
+  const status = document.getElementById('loan-status').value;
+  const loans = await fetch(`/api/loans${status?'?status='+status:''}`).then(r=>r.json());
+  document.getElementById('loan-count').textContent = `${loans.length} loans`;
+
+  const total = loans.reduce((a,l)=>a+l.loan_amount,0);
+  const outstanding = loans.reduce((a,l)=>a+l.outstanding,0);
+  const active = loans.filter(l=>l.status==='Active').length;
+  const closed = loans.filter(l=>l.status==='Closed').length;
+
+  document.getElementById('loan-stats').innerHTML = `
+    <div class="stat-card red"><div class="stat-label">Total Outstanding</div><div class="stat-value" style="font-size:16px">${fmtK(outstanding)}</div><div class="stat-sub">${active} active loans</div></div>
+    <div class="stat-card gold"><div class="stat-label">Total Sanctioned</div><div class="stat-value" style="font-size:16px">${fmtK(total)}</div><div class="stat-sub">All time</div></div>
+    <div class="stat-card green"><div class="stat-label">Loans Closed</div><div class="stat-value">${closed}</div><div class="stat-sub">fully repaid</div></div>
+    <div class="stat-card blue"><div class="stat-label">Active Loans</div><div class="stat-value">${active}</div><div class="stat-sub">being repaid</div></div>
+  `;
+
+  document.getElementById('loan-tbody').innerHTML = loans.map(l=>`<tr>
+    <td class="mono text-gold">${l.emp_code}</td>
+    <td style="font-weight:500">${l.name}</td>
+    <td class="text-muted text-sm">${l.dept_name}</td>
+    <td class="text-sm">${l.purpose}</td>
+    <td class="num">${fmt(l.loan_amount)}</td>
+    <td class="num">${fmt(l.emi_amount)}</td>
+    <td>
+      <div style="font-size:11px;font-family:'IBM Plex Mono',monospace">
+        <span class="text-green">${l.emis_paid}</span><span class="text-muted">/${l.total_emis}</span>
+        <div style="margin-top:3px;height:3px;background:var(--border);border-radius:2px;overflow:hidden">
+          <div style="height:100%;background:var(--green);width:${Math.round(l.emis_paid/l.total_emis*100)}%"></div>
+        </div>
+      </div>
+    </td>
+    <td class="num ${l.outstanding>0?'text-red':'text-green'}">${fmt(l.outstanding)}</td>
+    <td>${statusBadge(l.status)}</td>
+  </tr>`).join('') || '<tr><td colspan="9"><div class="empty"><div>No loans</div></div></td></tr>';
+}
+
+function calcEmi() {
+  const amt = parseFloat(document.getElementById('l-amount').value)||0;
+  const emis = parseInt(document.getElementById('l-emis').value)||1;
+  document.getElementById('l-emi').value = (amt/emis).toFixed(2);
+}
+
+async function initModal() {
+  document.getElementById('l-date').value = new Date().toISOString().slice(0,10);
+  const emps = await fetch('/api/employees?status=Active').then(r=>r.json());
+  document.getElementById('l-emp').innerHTML = emps.map(e=>`<option value="${e.emp_id}">${e.emp_code} — ${e.full_name}</option>`).join('');
+}
+
+async function submitLoan() {
+  const data = {
+    emp_id: document.getElementById('l-emp').value,
+    loan_amount: document.getElementById('l-amount').value,
+    loan_date: document.getElementById('l-date').value,
+    emi_amount: document.getElementById('l-emi').value,
+    total_emis: document.getElementById('l-emis').value,
+    purpose: document.getElementById('l-purpose').value
+  };
+  const r = await fetch('/api/loans',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(r=>r.json());
+  if(r.success) { toast('Loan created','success'); closeModal('modal-loan'); loadLoans(); }
+  else toast(r.error,'error');
+}
+
+loadLoans(); initModal();
+</script>
+{% endblock %}

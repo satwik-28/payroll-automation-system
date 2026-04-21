@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block breadcrumb %}Overview / This Month{% endblock %}
+
+{% block content %}
+<!-- STAT CARDS -->
+<div class="stats-grid" id="stats-grid">
+  <div class="page-loader"><div class="loader big-loader"></div></div>
+</div>
+
+<!-- CHARTS ROW -->
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Monthly Payroll Trend</div>
+        <div class="card-subtitle">Last 12 months — Net salary in ₹L</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <canvas id="trendChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Department Cost</div>
+        <div class="card-subtitle">Net payroll this period</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="bar-chart" id="dept-chart">
+        <div class="page-loader"><div class="loader"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM ROW -->
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Top Earners</div>
+      <div class="card-actions">
+        <span class="badge badge-gold">This Period</span>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="earners-table">
+        <thead><tr><th>#</th><th>Employee</th><th>Department</th><th class="num">Net Salary</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Quick Actions</div>
+    </div>
+    <div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="/payroll" class="btn btn-secondary" style="justify-content:flex-start;gap:12px;padding:14px 16px;">
+          <span style="font-size:20px">💰</span>
+          <div style="text-align:left">
+            <div style="font-size:13px;font-weight:600">Run Payroll</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px">Generate monthly payroll</div>
+          </div>
+        </a>
+        <a href="/employees" class="btn btn-secondary" style="justify-content:flex-start;gap:12px;padding:14px 16px;">
+          <span style="font-size:20px">👤</span>
+          <div style="text-align:left">
+            <div style="font-size:13px;font-weight:600">Add Employee</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px">Onboard a new team member</div>
+          </div>
+        </a>
+        <a href="/attendance" class="btn btn-secondary" style="justify-content:flex-start;gap:12px;padding:14px 16px;">
+          <span style="font-size:20px">📋</span>
+          <div style="text-align:left">
+            <div style="font-size:13px;font-weight:600">Attendance</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px">Mark & view attendance</div>
+          </div>
+        </a>
+        <a href="/reports" class="btn btn-secondary" style="justify-content:flex-start;gap:12px;padding:14px 16px;">
+          <span style="font-size:20px">📊</span>
+          <div style="text-align:left">
+            <div style="font-size:13px;font-weight:600">Reports</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px">Analytics & exports</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+async function loadDashboard() {
+  const data = await fetch('/api/stats').then(r=>r.json());
+
+  // Stat cards
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card gold">
+      <div class="stat-icon">👥</div>
+      <div class="stat-label">Active Employees</div>
+      <div class="stat-value">${data.emp_active}</div>
+      <div class="stat-sub">${data.emp_total} total · ${data.dept_count} depts</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-icon">💰</div>
+      <div class="stat-label">Gross Payroll</div>
+      <div class="stat-value" style="font-size:16px">${fmtK(data.gross_payroll)}</div>
+      <div class="stat-sub">${data.period_name}</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-icon">🏦</div>
+      <div class="stat-label">Net Disbursed</div>
+      <div class="stat-value" style="font-size:16px">${fmtK(data.net_payroll)}</div>
+      <div class="stat-sub">${data.payroll_headcount} employees paid</div>
+    </div>
+    <div class="stat-card teal">
+      <div class="stat-icon">📋</div>
+      <div class="stat-label">Present Today</div>
+      <div class="stat-value">${data.attendance_today}</div>
+      <div class="stat-sub">employees checked in</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-icon">📅</div>
+      <div class="stat-label">Leave Pending</div>
+      <div class="stat-value">${data.leave_pending}</div>
+      <div class="stat-sub">awaiting approval</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-icon">🏦</div>
+      <div class="stat-label">Loan Outstanding</div>
+      <div class="stat-value" style="font-size:16px">${fmtK(data.loan_outstanding)}</div>
+      <div class="stat-sub">total active loans</div>
+    </div>
+  `;
+
+  // Trend chart
+  const ctx = document.getElementById('trendChart').getContext('2d');
+  const labels = data.monthly_trend.map(m=>m.period_name.slice(0,3)+' '+m.year);
+  const nets   = data.monthly_trend.map(m=>m.net_k);
+  const gross  = data.monthly_trend.map(m=>m.gross_k);
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label:'Gross (₹K)', data:gross, borderColor:'#f0b429', backgroundColor:'rgba(240,180,41,.08)', tension:.4, pointRadius:3 },
+        { label:'Net (₹K)',   data:nets,  borderColor:'#22c55e', backgroundColor:'rgba(34,197,94,.08)',  tension:.4, pointRadius:3 }
+      ]
+    },
+    options: {
+      responsive:true, interaction:{mode:'index'},
+      plugins:{ legend:{ labels:{ color:'#8a9ab5', font:{size:11} } } },
+      scales:{
+        x:{ grid:{ color:'#1e2b40' }, ticks:{ color:'#8a9ab5', font:{size:10} } },
+        y:{ grid:{ color:'#1e2b40' }, ticks:{ color:'#8a9ab5', font:{size:10}, callback:v=>'₹'+v+'K' } }
+      }
+    }
+  });
+
+  // Dept bar chart
+  const max = Math.max(...data.dept_costs.map(d=>d.net));
+  const colors = ['#f0b429','#3b82f6','#22c55e','#06b6d4','#a855f7','#f97316','#ef4444','#ec4899'];
+  document.getElementById('dept-chart').innerHTML = data.dept_costs.map((d,i)=>`
+    <div class="bar-row">
+      <div class="bar-label">${d.dept_name.replace('&','&amp;')}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${(d.net/max*100).toFixed(1)}%;background:${colors[i%colors.length]}"></div>
+      </div>
+      <div class="bar-val">${fmtK(d.net)} <span style="color:var(--text3)">(${d.hc})</span></div>
+    </div>
+  `).join('');
+
+  // Top earners
+  document.querySelector('#earners-table tbody').innerHTML = data.top_earners.map((e,i)=>`
+    <tr>
+      <td class="mono text-muted">${i+1}</td>
+      <td style="font-weight:600">${e.name}</td>
+      <td class="text-muted text-sm">${e.dept}</td>
+      <td class="num text-gold">${fmt(e.net)}</td>
+    </tr>
+  `).join('');
+}
+
+loadDashboard();
+</script>
+{% endblock %}

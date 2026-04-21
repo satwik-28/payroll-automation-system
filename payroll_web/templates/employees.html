@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+{% block title %}Employees{% endblock %}
+{% block page_title %}Employees{% endblock %}
+{% block breadcrumb %}People / Employee Directory{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-16">
+  <div class="search-row" style="flex:1;margin:0">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="form-control search-wrap" id="srch" placeholder="Search name, code, email…" oninput="loadEmployees()">
+    </div>
+    <select class="form-control" id="fdept" onchange="loadEmployees()" style="width:180px">
+      <option value="">All Departments</option>
+    </select>
+    <select class="form-control" id="fstatus" onchange="loadEmployees()" style="width:130px">
+      <option value="">All Status</option>
+      <option>Active</option><option>Inactive</option><option>Terminated</option><option>On-Leave</option>
+    </select>
+  </div>
+  <div style="margin-left:16px">
+    <button class="btn btn-primary" onclick="openModal('modal-add')">＋ Add Employee</button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">Employee Directory</div>
+    <div class="card-actions">
+      <span id="emp-count" class="badge badge-gray">Loading…</span>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th><th>Name</th><th>Department</th><th>Designation</th>
+          <th>Grade</th><th>Basic Salary</th><th>Joined</th><th>Type</th><th>Status</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="emp-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Employee Detail Modal -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal" style="max-width:780px">
+    <div class="modal-header">
+      <div class="logo-icon" id="det-avatar" style="width:40px;height:40px;font-size:14px">?</div>
+      <div>
+        <div class="modal-title" id="det-name">—</div>
+        <div style="font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace" id="det-code">—</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-detail')">✕</button>
+    </div>
+    <div class="modal-body" id="det-body">
+      <div class="page-loader"><div class="loader big-loader"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Employee Modal -->
+<div class="modal-overlay" id="modal-add">
+  <div class="modal" style="max-width:740px">
+    <div class="modal-header">
+      <div class="modal-title">Add New Employee</div>
+      <button class="modal-close" onclick="closeModal('modal-add')">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="add-form">
+        <div class="tabs" id="add-tabs">
+          <div class="tab active" data-tab="tab-personal">Personal</div>
+          <div class="tab" data-tab="tab-job">Job Details</div>
+          <div class="tab" data-tab="tab-bank">Bank & Docs</div>
+        </div>
+
+        <div id="tab-personal" class="tab-panel active">
+          <div class="form-grid form-grid-2">
+            <div class="form-group"><label class="form-label">Employee Code *</label><input class="form-control" name="emp_code" placeholder="EMP031" required></div>
+            <div class="form-group"><label class="form-label">Gender *</label>
+              <select class="form-control" name="gender" required><option>Male</option><option>Female</option><option>Other</option></select></div>
+            <div class="form-group"><label class="form-label">First Name *</label><input class="form-control" name="first_name" required></div>
+            <div class="form-group"><label class="form-label">Last Name *</label><input class="form-control" name="last_name" required></div>
+            <div class="form-group"><label class="form-label">Date of Birth *</label><input class="form-control" name="dob" type="date" required></div>
+            <div class="form-group"><label class="form-label">Email *</label><input class="form-control" name="email" type="email" required></div>
+            <div class="form-group"><label class="form-label">Phone *</label><input class="form-control" name="phone" required></div>
+            <div class="form-group"><label class="form-label">City *</label><input class="form-control" name="city" required></div>
+            <div class="form-group" style="grid-column:1/-1"><label class="form-label">Address *</label><input class="form-control" name="address" required></div>
+            <div class="form-group"><label class="form-label">State *</label><input class="form-control" name="state" required></div>
+          </div>
+        </div>
+
+        <div id="tab-job" class="tab-panel">
+          <div class="form-grid form-grid-2">
+            <div class="form-group"><label class="form-label">Department *</label>
+              <select class="form-control" name="dept_id" id="add-dept" onchange="loadDesigs()" required><option value="">Select…</option></select></div>
+            <div class="form-group"><label class="form-label">Designation *</label>
+              <select class="form-control" name="desig_id" id="add-desig" required><option value="">Select dept first</option></select></div>
+            <div class="form-group"><label class="form-label">Salary Grade *</label>
+              <select class="form-control" name="grade_id" id="add-grade" required><option value="">Select…</option></select></div>
+            <div class="form-group"><label class="form-label">Basic Salary (₹) *</label><input class="form-control" name="basic_salary" type="number" required></div>
+            <div class="form-group"><label class="form-label">Date of Joining *</label><input class="form-control" name="date_joined" type="date" required></div>
+            <div class="form-group"><label class="form-label">Employment Type</label>
+              <select class="form-control" name="employment_type">
+                <option>Full-Time</option><option>Part-Time</option><option>Contract</option><option>Intern</option>
+              </select></div>
+          </div>
+        </div>
+
+        <div id="tab-bank" class="tab-panel">
+          <div class="form-grid form-grid-2">
+            <div class="form-group"><label class="form-label">PAN Number *</label><input class="form-control" name="pan_number" placeholder="ABCDE1234F" required></div>
+            <div class="form-group"><label class="form-label">Last 4 Aadhaar *</label><input class="form-control" name="aadhaar_last4" maxlength="4" required></div>
+            <div class="form-group"><label class="form-label">Bank Account *</label><input class="form-control" name="bank_account" required></div>
+            <div class="form-group"><label class="form-label">Bank Name *</label><input class="form-control" name="bank_name" required></div>
+            <div class="form-group"><label class="form-label">IFSC Code *</label><input class="form-control" name="ifsc_code" required></div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-add')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitEmployee()">Save Employee</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let allDepts = [], allGrades = [];
+
+async function init() {
+  allDepts = await fetch('/api/departments').then(r=>r.json());
+  allGrades = await fetch('/api/grades').then(r=>r.json());
+  const dsel = document.getElementById('fdept');
+  allDepts.forEach(d=>dsel.innerHTML+=`<option value="${d.dept_id}">${d.dept_name}</option>`);
+  const asel = document.getElementById('add-dept');
+  allDepts.forEach(d=>asel.innerHTML+=`<option value="${d.dept_id}">${d.dept_name}</option>`);
+  const gsel = document.getElementById('add-grade');
+  allGrades.forEach(g=>gsel.innerHTML+=`<option value="${g.grade_id}">${g.grade_code} — ${g.grade_name}</option>`);
+  loadEmployees();
+  initTabs(document.getElementById('modal-add').querySelector('.modal-body'));
+}
+
+async function loadDesigs() {
+  const deptId = document.getElementById('add-dept').value;
+  const dsel = document.getElementById('add-desig');
+  if(!deptId) { dsel.innerHTML='<option>Select dept first</option>'; return; }
+  const desigs = await fetch(`/api/designations?dept_id=${deptId}`).then(r=>r.json());
+  dsel.innerHTML = desigs.map(d=>`<option value="${d.desig_id}">${d.desig_title}</option>`).join('');
+}
+
+async function loadEmployees() {
+  const q = document.getElementById('srch').value;
+  const dept = document.getElementById('fdept').value;
+  const status = document.getElementById('fstatus').value;
+  const params = new URLSearchParams();
+  if(q) params.set('q',q);
+  if(dept) params.set('dept',dept);
+  if(status) params.set('status',status);
+  const emps = await fetch('/api/employees?'+params).then(r=>r.json());
+  document.getElementById('emp-count').textContent = `${emps.length} employees`;
+  document.querySelector('#emp-tbody').innerHTML = emps.map(e=>`
+    <tr>
+      <td class="mono text-gold cursor-pointer clickable" onclick="viewEmployee(${e.emp_id})">${e.emp_code}</td>
+      <td><span style="font-weight:600;cursor:pointer" onclick="viewEmployee(${e.emp_id})">${e.full_name}</span></td>
+      <td class="text-muted text-sm">${e.dept_name}</td>
+      <td class="text-sm">${e.desig_title}</td>
+      <td><span class="badge badge-gray">${e.grade_code}</span></td>
+      <td class="num">${fmt(e.basic_salary)}</td>
+      <td class="mono text-muted">${e.date_joined}</td>
+      <td>${statusBadge(e.employment_type)}</td>
+      <td>${statusBadge(e.status)}</td>
+      <td>
+        <div class="flex gap-8">
+          <button class="btn btn-xs btn-secondary" onclick="viewEmployee(${e.emp_id})">View</button>
+          ${e.status==='Active'?`<button class="btn btn-xs btn-danger" onclick="changeStatus(${e.emp_id},'Inactive')">Deactivate</button>`:''}
+          ${e.status==='Inactive'?`<button class="btn btn-xs btn-secondary" onclick="changeStatus(${e.emp_id},'Active')">Activate</button>`:''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function viewEmployee(eid) {
+  openModal('modal-detail');
+  document.getElementById('det-body').innerHTML = '<div class="page-loader"><div class="loader big-loader"></div></div>';
+  const d = await fetch(`/api/employees/${eid}`).then(r=>r.json());
+  document.getElementById('det-name').textContent = d.full_name;
+  document.getElementById('det-code').textContent = d.emp_code + ' · ' + d.dept_name;
+  document.getElementById('det-avatar').textContent = d.full_name.charAt(0);
+
+  document.getElementById('det-body').innerHTML = `
+    <div class="grid-2" style="gap:12px;margin-bottom:16px">
+      ${infoItem('Email', d.email)}
+      ${infoItem('Phone', d.phone)}
+      ${infoItem('Department', d.dept_name)}
+      ${infoItem('Designation', d.desig_title)}
+      ${infoItem('Grade', d.grade_name)}
+      ${infoItem('Status', statusBadge(d.status))}
+      ${infoItem('Basic Salary', fmt(d.basic_salary))}
+      ${infoItem('Gross CTC', fmt(d.gross_ctc))}
+      ${infoItem('HRA', fmt(d.hra))}
+      ${infoItem('DA', fmt(d.da))}
+      ${infoItem('Date Joined', d.date_joined)}
+      ${infoItem('Experience', (d.years_experience||0)+' years')}
+      ${infoItem('PAN', d.pan_number)}
+      ${infoItem('Bank', d.bank_name)}
+    </div>
+    <hr class="divider">
+    <div class="section-title">Recent Payslips</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Period</th><th class="num">Gross</th><th class="num">Net</th><th>Present</th><th>Status</th></tr></thead>
+        <tbody>${(d.payslips||[]).map(p=>`<tr>
+          <td class="mono text-sm">${p.period_name}</td>
+          <td class="num">${fmt(p.gross_salary)}</td>
+          <td class="num text-green">${fmt(p.net_salary)}</td>
+          <td class="mono">${p.days_present}</td>
+          <td>${statusBadge(p.status)}</td>
+        </tr>`).join('')||'<tr><td colspan="5" class="text-muted">No records</td></tr>'}</tbody>
+      </table>
+    </div>
+    ${d.loans&&d.loans.length?`<hr class="divider"><div class="section-title">Active Loans</div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Purpose</th><th class="num">Loan Amt</th><th class="num">EMI</th><th class="num">Outstanding</th></tr></thead>
+      <tbody>${d.loans.map(l=>`<tr>
+        <td>${l.purpose}</td><td class="num">${fmt(l.loan_amount)}</td>
+        <td class="num">${fmt(l.emi_amount)}</td><td class="num text-red">${fmt(l.outstanding_balance)}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>`:''}
+  `;
+}
+function infoItem(label, val) {
+  return `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px">
+    <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-family:'IBM Plex Mono',monospace;margin-bottom:4px">${label}</div>
+    <div style="font-size:13px;font-weight:500">${val||'—'}</div>
+  </div>`;
+}
+
+async function changeStatus(eid, status) {
+  await fetch(`/api/employees/${eid}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+  toast(`Status updated to ${status}`,'success');
+  loadEmployees();
+}
+
+async function submitEmployee() {
+  const form = document.getElementById('add-form');
+  const data = Object.fromEntries(new FormData(form));
+  const res = await fetch('/api/employees',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  const j = await res.json();
+  if(j.success) { toast('Employee added!','success'); closeModal('modal-add'); loadEmployees(); form.reset(); }
+  else toast(j.error,'error');
+}
+
+init();
+</script>
+{% endblock %}

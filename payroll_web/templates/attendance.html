@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Attendance{% endblock %}
+{% block page_title %}Attendance{% endblock %}
+{% block breadcrumb %}People / Attendance Tracker{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-16" style="flex-wrap:wrap;gap:10px">
+  <div class="flex gap-8">
+    <select class="form-control" id="att-year" onchange="loadSummary()">
+      <option value="2026">2026</option><option value="2025">2025</option>
+    </select>
+    <select class="form-control" id="att-month" onchange="loadSummary()">
+      {% for m,n in [(1,'January'),(2,'February'),(3,'March'),(4,'April'),(5,'May'),(6,'June'),(7,'July'),(8,'August'),(9,'September'),(10,'October'),(11,'November'),(12,'December')] %}
+      <option value="{{ m }}" {% if m==3 %}selected{% endif %}>{{ n }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button class="btn btn-primary" onclick="openModal('modal-mark')">＋ Mark Attendance</button>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">Monthly Attendance Summary</div>
+    <div class="card-actions">
+      <span id="att-count" class="badge badge-gray">—</span>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Code</th><th>Employee</th><th class="num">Present</th><th class="num">Absent</th><th class="num">Half-Day</th><th class="num">Leave</th><th class="num">Hours</th><th class="num">Avg Hours</th></tr></thead>
+      <tbody id="att-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Mark Attendance Modal -->
+<div class="modal-overlay" id="modal-mark">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title">Mark Attendance</div>
+      <button class="modal-close" onclick="closeModal('modal-mark')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid" style="gap:14px">
+        <div class="form-group">
+          <label class="form-label">Employee</label>
+          <select class="form-control" id="att-emp"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input class="form-control" type="date" id="att-date" value="">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-control" id="att-status">
+            <option>Present</option><option>Absent</option><option>Half-Day</option><option>On-Leave</option><option>Holiday</option>
+          </select>
+        </div>
+        <div class="form-grid form-grid-2">
+          <div class="form-group"><label class="form-label">Check In</label><input class="form-control" type="time" id="att-in" value="09:00"></div>
+          <div class="form-group"><label class="form-label">Check Out</label><input class="form-control" type="time" id="att-out" value="18:00"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hours Worked</label>
+          <input class="form-control" type="number" id="att-hours" value="9" step="0.5">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-mark')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAttendance()">Save</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function loadSummary() {
+  const year = document.getElementById('att-year').value;
+  const month = document.getElementById('att-month').value;
+  const rows = await fetch(`/api/attendance/summary?year=${year}&month=${month}`).then(r=>r.json());
+  document.getElementById('att-count').textContent = `${rows.length} employees`;
+  document.getElementById('att-tbody').innerHTML = rows.map(r=>`<tr>
+    <td class="mono text-gold">${r.emp_code}</td>
+    <td style="font-weight:500">${r.employee_name}</td>
+    <td class="num text-green">${r.days_present}</td>
+    <td class="num ${r.days_absent>2?'text-red':'text-muted'}">${r.days_absent}</td>
+    <td class="num text-orange">${r.half_days||0}</td>
+    <td class="num text-blue">${r.leave_days}</td>
+    <td class="num">${r.total_hours}</td>
+    <td class="num text-muted">${r.avg_hours||0}</td>
+  </tr>`).join('') || '<tr><td colspan="8"><div class="empty"><div>No data for this period</div></div></td></tr>';
+}
+
+async function initModal() {
+  document.getElementById('att-date').value = new Date().toISOString().slice(0,10);
+  const emps = await fetch('/api/employees?status=Active').then(r=>r.json());
+  document.getElementById('att-emp').innerHTML = emps.map(e=>`<option value="${e.emp_id}">${e.emp_code} — ${e.full_name}</option>`).join('');
+}
+
+async function submitAttendance() {
+  const data = {
+    emp_id: document.getElementById('att-emp').value,
+    att_date: document.getElementById('att-date').value,
+    status: document.getElementById('att-status').value,
+    check_in: document.getElementById('att-in').value,
+    check_out: document.getElementById('att-out').value,
+    hours_worked: document.getElementById('att-hours').value
+  };
+  const r = await fetch('/api/attendance/mark',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(r=>r.json());
+  if(r.success) { toast('Attendance saved','success'); closeModal('modal-mark'); loadSummary(); }
+  else toast(r.error,'error');
+}
+
+loadSummary(); initModal();
+</script>
+{% endblock %}

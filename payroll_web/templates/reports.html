@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block page_title %}Reports & Analytics{% endblock %}
+{% block breadcrumb %}Analytics / Reports{% endblock %}
+
+{% block content %}
+<div class="tabs" id="report-tabs">
+  <div class="tab" data-tab="tab-ytd">YTD Salary</div>
+  <div class="tab" data-tab="tab-dept">Dept Summary</div>
+  <div class="tab" data-tab="tab-audit">Audit Trail</div>
+</div>
+
+<!-- YTD -->
+<div id="tab-ytd" class="tab-panel">
+  <div class="flex mb-16 gap-8">
+    <select class="form-control" id="ytd-year" style="width:120px">
+      <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
+    </select>
+    <button class="btn btn-primary" onclick="loadYtd()">Load</button>
+    <button class="btn btn-secondary" onclick="exportYtd()">↓ Export CSV</button>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">Year-to-Date Salary Summary</div><div class="card-actions"><span id="ytd-count" class="badge badge-gray">—</span></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Code</th><th>Employee</th><th class="num">Months</th><th class="num">YTD Gross</th><th class="num">YTD TDS</th><th class="num">YTD PF</th><th class="num">YTD Net</th></tr></thead>
+        <tbody id="ytd-tbody"></tbody>
+      </table>
+    </div>
+    <div id="ytd-totals" style="padding:12px 20px;background:var(--bg3);border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:12px;display:flex;gap:24px"></div>
+  </div>
+</div>
+
+<!-- Dept -->
+<div id="tab-dept" class="tab-panel">
+  <div class="flex mb-16 gap-8">
+    <select class="form-control" id="dept-period" style="width:200px"></select>
+    <button class="btn btn-primary" onclick="loadDeptSummary()">Load</button>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">Department-wise Payroll Cost</div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Department</th><th class="num">Headcount</th><th class="num">Total Gross</th><th class="num">Total Net</th><th class="num">Avg Net</th><th class="num">PF</th><th class="num">TDS</th></tr></thead>
+        <tbody id="dept-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card" style="margin-top:20px">
+    <div class="card-header"><div class="card-title">Cost Distribution</div></div>
+    <div class="card-body">
+      <div class="bar-chart" id="dept-bars"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Audit -->
+<div id="tab-audit" class="tab-panel">
+  <div class="flex mb-16 gap-8">
+    <select class="form-control" id="audit-table" style="width:200px">
+      <option value="">All Tables</option>
+      <option value="employees">employees</option>
+      <option value="payroll_records">payroll_records</option>
+      <option value="salary_revisions">salary_revisions</option>
+    </select>
+    <select class="form-control" id="audit-limit" style="width:100px">
+      <option value="20">20 rows</option><option value="50">50 rows</option><option value="100">100 rows</option>
+    </select>
+    <button class="btn btn-primary" onclick="loadAudit()">Load</button>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">Audit Trail</div><div class="card-actions"><span id="audit-count" class="badge badge-gray">—</span></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Table</th><th>Record ID</th><th>Action</th><th>Old Data</th><th>New Data</th><th>When</th></tr></thead>
+        <tbody id="audit-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let ytdData = [];
+
+async function initReports() {
+  initTabs(document.querySelector('.tabs').parentElement);
+  const periods = await fetch('/api/payroll/periods').then(r=>r.json());
+  const sel = document.getElementById('dept-period');
+  periods.filter(p=>p.records>0).forEach(p=>sel.innerHTML+=`<option value="${p.period_id}">${p.period_name}</option>`);
+  loadYtd(); loadAudit();
+}
+
+async function loadYtd() {
+  const year = document.getElementById('ytd-year').value;
+  ytdData = await fetch(`/api/reports/ytd/${year}`).then(r=>r.json());
+  document.getElementById('ytd-count').textContent = `${ytdData.length} employees`;
+  let tg=0, tt=0, tn=0;
+  document.getElementById('ytd-tbody').innerHTML = ytdData.map(r=>{
+    tg+=r.ytd_gross; tt+=r.ytd_tds; tn+=r.ytd_net;
+    return `<tr>
+      <td class="mono text-gold">${r.emp_code}</td>
+      <td style="font-weight:500">${r.employee_name}</td>
+      <td class="num mono">${r.months_processed}</td>
+      <td class="num">${fmt(r.ytd_gross)}</td>
+      <td class="num text-red">${fmt(r.ytd_tds)}</td>
+      <td class="num text-muted">${fmt(r.ytd_pf)}</td>
+      <td class="num text-green fw-600">${fmt(r.ytd_net)}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="7"><div class="empty"><div>No YTD data for this year</div></div></td></tr>';
+  document.getElementById('ytd-totals').innerHTML = `
+    <span>YTD Gross: <b class="text-gold">${fmtK(tg)}</b></span>
+    <span>YTD TDS: <b class="text-red">${fmtK(tt)}</b></span>
+    <span>YTD Net: <b class="text-green">${fmtK(tn)}</b></span>
+  `;
+}
+
+function exportYtd() {
+  const year = document.getElementById('ytd-year').value;
+  if(!ytdData.length) { toast('Load data first','error'); return; }
+  const headers = Object.keys(ytdData[0]).join(',');
+  const rows = ytdData.map(r=>Object.values(r).join(',')).join('\n');
+  const blob = new Blob([headers+'\n'+rows], {type:'text/csv'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`ytd_salary_${year}.csv`; a.click();
+  toast('CSV downloaded','success');
+}
+
+async function loadDeptSummary() {
+  const pid = document.getElementById('dept-period').value;
+  if(!pid) return;
+  const rows = await fetch(`/api/reports/dept-summary/${pid}`).then(r=>r.json());
+  document.getElementById('dept-tbody').innerHTML = rows.map(r=>`<tr>
+    <td style="font-weight:500">${r.dept_name}</td>
+    <td class="num">${r.headcount}</td>
+    <td class="num">${fmt(r.total_gross)}</td>
+    <td class="num text-green fw-600">${fmt(r.total_net)}</td>
+    <td class="num text-muted">${fmt(r.avg_net)}</td>
+    <td class="num text-muted">${fmt(r.total_pf)}</td>
+    <td class="num text-red">${fmt(r.total_tds)}</td>
+  </tr>`).join('');
+  const max = Math.max(...rows.map(r=>r.total_net));
+  const colors = ['#f0b429','#3b82f6','#22c55e','#06b6d4','#a855f7','#f97316','#ef4444','#ec4899','#10b981','#8b5cf6'];
+  document.getElementById('dept-bars').innerHTML = rows.map((r,i)=>`
+    <div class="bar-row">
+      <div class="bar-label">${r.dept_name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(r.total_net/max*100).toFixed(1)}%;background:${colors[i%colors.length]}"></div></div>
+      <div class="bar-val">${fmtK(r.total_net)} <span style="color:var(--text3)">(${r.headcount})</span></div>
+    </div>
+  `).join('');
+}
+
+async function loadAudit() {
+  const tbl = document.getElementById('audit-table').value;
+  const limit = document.getElementById('audit-limit').value;
+  const rows = await fetch(`/api/reports/audit?table=${tbl}&limit=${limit}`).then(r=>r.json());
+  document.getElementById('audit-count').textContent = `${rows.length} entries`;
+  const actionColors = {INSERT:'green', UPDATE:'gold', DELETE:'red'};
+  document.getElementById('audit-tbody').innerHTML = rows.map((r,i)=>`<tr>
+    <td class="mono text-muted">${i+1}</td>
+    <td class="mono text-blue">${r.table_name}</td>
+    <td class="mono">${r.record_id}</td>
+    <td><span class="badge badge-${actionColors[r.action]||'gray'}">${r.action}</span></td>
+    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;font-size:11px;color:var(--text3)">${r.old_data||'—'}</td>
+    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;font-size:11px;color:var(--text3)">${r.new_data||'—'}</td>
+    <td class="mono text-muted" style="font-size:11px">${r.performed_at}</td>
+  </tr>`).join('') || '<tr><td colspan="7"><div class="empty"><div>No audit entries</div></div></td></tr>';
+}
+
+initReports();
+</script>
+{% endblock %}
