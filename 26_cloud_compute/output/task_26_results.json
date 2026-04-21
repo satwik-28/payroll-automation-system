@@ -1,0 +1,86 @@
+{
+  "task24_cloud_comparison": {
+    "Storage": [
+      "AWS",
+      "GCP",
+      "Azure"
+    ],
+    "Compute": [
+      "AWS",
+      "GCP",
+      "Azure"
+    ],
+    "Data Warehouse": [
+      "AWS",
+      "GCP",
+      "Azure"
+    ],
+    "Managed Database": [
+      "AWS",
+      "GCP",
+      "Azure"
+    ],
+    "Streaming": [
+      "AWS",
+      "GCP",
+      "Azure"
+    ],
+    "Orchestration": [
+      "AWS",
+      "GCP",
+      "Azure"
+    ],
+    "Serverless": [
+      "AWS",
+      "GCP",
+      "Azure"
+    ]
+  },
+  "task25_storage": {
+    "bucket": "payrollwise-data-ap-south",
+    "objects": 7,
+    "cost_estimate": {
+      "size_bytes": 7712,
+      "size_gb": 7e-06,
+      "monthly_cost_usd": 0.0
+    }
+  },
+  "task26_compute": {
+    "instance_id": "i-c6f2d84807583d53a",
+    "deployment_steps": 13,
+    "monthly_cost_usd": 16.94
+  },
+  "task27_dw": {
+    "queries_run": 5,
+    "usage": {
+      "provider": "BigQuery",
+      "total_queries": 5,
+      "total_bytes_tb": 0.001102,
+      "estimated_cost_usd": 0.0055,
+      "avg_query_ms": 20.66
+    },
+    "query_results": {
+      "Monthly Payroll Cost by Department (2026)": {
+        "rows": 12,
+        "cost_usd": 0.000326
+      },
+      "Employee Salary Percentile (Top 10%)": {
+        "rows": 5,
+        "cost_usd": 0.001416
+      },
+      "Quarter-over-Quarter Payroll Trend": {
+        "rows": 1,
+        "cost_usd": 0.001052
+      },
+      "TDS Liability Analysis by Income Bracket": {
+        "rows": 5,
+        "cost_usd": 0.001883
+      },
+      "Loan Repayment Status Dashboard": {
+        "rows": 2,
+        "cost_usd": 0.000835
+      }
+    }
+  },
+  "timestamp": "2026-04-21T12:42:18.453882"
+}
