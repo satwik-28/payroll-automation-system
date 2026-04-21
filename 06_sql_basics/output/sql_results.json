@@ -1,0 +1,125 @@
+{
+  "task06_basic_queries": {
+    "Q1 - SELECT: All active employees": {
+      "rows": 10,
+      "elapsed_ms": 5.89
+    },
+    "Q2 - WHERE + AND: High earners in IT": {
+      "rows": 3,
+      "elapsed_ms": 0.0
+    },
+    "Q3 - GROUP BY + COUNT: Employees per department": {
+      "rows": 22,
+      "elapsed_ms": 3.19
+    },
+    "Q4 - GROUP BY + HAVING: Depts with avg salary > 80K": {
+      "rows": 6,
+      "elapsed_ms": 2.53
+    },
+    "Q5 - ORDER BY + LIMIT: Top 10 earners": {
+      "rows": 10,
+      "elapsed_ms": 1.48
+    },
+    "Q6 - BETWEEN + IN: Mid-range IT & Finance staff": {
+      "rows": 4,
+      "elapsed_ms": 1.72
+    },
+    "Q7 - Aggregate: Payroll statistics by gender": {
+      "rows": 2,
+      "elapsed_ms": 1.34
+    },
+    "Q8 - DATE functions: Experience by joining year": {
+      "rows": 12,
+      "elapsed_ms": 0.0
+    }
+  },
+  "task07_advanced_queries": {
+    "Q1 - INNER JOIN (3 tables): Payroll with full context": {
+      "rows": 10,
+      "elapsed_ms": 0.53
+    },
+    "Q2 - LEFT JOIN: Employees without payroll (period 25)": {
+      "rows": 30,
+      "elapsed_ms": 0.0
+    },
+    "Q3 - Subquery: Employees earning above dept average": {
+      "rows": 10,
+      "elapsed_ms": 1.23
+    },
+    "Q4 - CTE: 3-month payroll trend": {
+      "rows": 3,
+      "elapsed_ms": 2.51
+    },
+    "Q5 - Window ROW_NUMBER: Salary rank within dept": {
+      "rows": 20,
+      "elapsed_ms": 3.7
+    },
+    "Q6 - Window LAG/LEAD: Month-over-month payroll change": {
+      "rows": 3,
+      "elapsed_ms": 1.44
+    },
+    "Q7 - Window NTILE: Salary quartile analysis": {
+      "rows": 15,
+      "elapsed_ms": 2.02
+    },
+    "Q8 - Correlated subquery: Employees with active loans": {
+      "rows": 21,
+      "elapsed_ms": 3.14
+    },
+    "Q9 - ROLLUP-style: Dept+Grade salary summary": {
+      "rows": 20,
+      "elapsed_ms": 3.08
+    },
+    "Q10 - Full business report: YTD salary with running total": {
+      "rows": 30,
+      "elapsed_ms": 4.98
+    }
+  },
+  "task08_oltp_vs_olap": {
+    "OLTP (Online Transaction Processing)": {
+      "purpose": "Day-to-day operational transactions",
+      "payroll_example": "Payroll processing, employee updates, attendance marking",
+      "characteristics": {
+        "query_type": "Short INSERT/UPDATE/DELETE transactions",
+        "data_volume": "Current operational data (GBs)",
+        "response_time": "Milliseconds",
+        "concurrency": "Thousands of concurrent users",
+        "normalization": "Highly normalized (3NF+) to avoid anomalies",
+        "indexes": "On FK, status, emp_code for fast lookups"
+      },
+      "schema_example": "employees \u2192 payroll_records \u2192 payroll_periods (normalized)",
+      "our_db_tables": [
+        "employees",
+        "payroll_records",
+        "attendance",
+        "leave_requests"
+      ]
+    },
+    "OLAP (Online Analytical Processing)": {
+      "purpose": "Historical analysis, reporting, BI dashboards",
+      "payroll_example": "Annual salary trends, dept cost analysis, TDS reports",
+      "characteristics": {
+        "query_type": "Complex SELECT with GROUP BY, window functions",
+        "data_volume": "Historical aggregated data (TBs)",
+        "response_time": "Seconds to minutes (acceptable for batch reports)",
+        "concurrency": "Few analytical users",
+        "normalization": "Denormalized (star/snowflake) for fast reads",
+        "indexes": "Column-store indexes, partitioning by year/month"
+      },
+      "schema_example": "fact_payroll \u2192 dim_employee, dim_dept, dim_time (star schema)",
+      "use_cases": [
+        "YTD reports",
+        "Dept cost dashboards",
+        "Tax liability forecasting"
+      ]
+    },
+    "Key Differences": {
+      "Data Model": "OLTP=Normalized | OLAP=Denormalized",
+      "Query Pattern": "OLTP=CRUD | OLAP=Aggregations",
+      "Optimization": "OLTP=Row-store | OLAP=Column-store",
+      "Backup": "OLTP=Continuous | OLAP=Periodic",
+      "Tools": "OLTP=PostgreSQL/MySQL/SQLite | OLAP=BigQuery/Redshift/Snowflake"
+    }
+  },
+  "timestamp": "2026-04-21T12:41:42.398458"
+}
