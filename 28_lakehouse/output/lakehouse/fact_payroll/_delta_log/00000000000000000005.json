@@ -1,0 +1,38 @@
+{
+  "version": 5,
+  "timestamp": "2026-04-21T12:42:19.637403",
+  "operation": "SCHEMA_CHANGE",
+  "operationParams": {
+    "mode": "SCHEMA_CHANGE"
+  },
+  "numFiles": 1,
+  "numOutputRows": 0,
+  "numRemovedFiles": 0,
+  "schema": [
+    "period",
+    "emp_code",
+    "month",
+    "basic_salary",
+    "payroll_id",
+    "status",
+    "gross_salary",
+    "name",
+    "emp_id",
+    "pf_employee",
+    "dept",
+    "income_tax_tds",
+    "days_present",
+    "year",
+    "days_absent",
+    "net_salary",
+    "loaded_at"
+  ],
+  "schema_change": {
+    "added": "loaded_at",
+    "type": "TIMESTAMP"
+  },
+  "checksum": "d75171398898",
+  "invariants": {
+    "no_null_emp_id": true
+  }
+}

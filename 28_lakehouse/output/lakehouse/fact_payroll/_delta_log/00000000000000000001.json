@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "timestamp": "2026-04-21T12:42:19.604159",
+  "operation": "WRITE",
+  "operationParams": {
+    "mode": "append"
+  },
+  "numFiles": 1,
+  "numOutputRows": 5,
+  "numRemovedFiles": 0,
+  "schema": [
+    "period",
+    "emp_code",
+    "month",
+    "basic_salary",
+    "payroll_id",
+    "status",
+    "gross_salary",
+    "name",
+    "emp_id",
+    "pf_employee",
+    "dept",
+    "income_tax_tds",
+    "days_present",
+    "year",
+    "days_absent",
+    "net_salary"
+  ],
+  "schema_change": null,
+  "checksum": "c54437cac5c7",
+  "invariants": {
+    "no_null_emp_id": true
+  }
+}
