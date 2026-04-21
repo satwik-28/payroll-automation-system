@@ -1,0 +1,54 @@
+{
+  "task09_dw": {
+    "dim_employee": 30,
+    "dim_department": 22,
+    "dim_period": 25,
+    "fact_payroll": 90
+  },
+  "task10_etl": {
+    "pipeline": "ETL",
+    "steps": {
+      "extract": {
+        "rows": 5,
+        "ms": 4.51
+      },
+      "transform": {
+        "transformed": 4,
+        "skipped": 1,
+        "ms": 0.0
+      },
+      "load": {
+        "loaded": 4,
+        "ms": 30.33
+      }
+    },
+    "total_ms": 35.42
+  },
+  "task10_elt": {
+    "pipeline": "ELT",
+    "steps": {
+      "extract": {
+        "rows": 5,
+        "ms": 0.85
+      },
+      "load_raw": {
+        "rows": 5,
+        "ms": 35.31
+      },
+      "transform_sql": {
+        "rows": 4,
+        "ms": 10.21
+      }
+    },
+    "total_ms": 47.43
+  },
+  "task11_ingest": {
+    "total": 500,
+    "loaded": 500,
+    "failed": 0,
+    "chunks": 5,
+    "start": "2026-04-21T12:41:43.033202",
+    "elapsed_ms": 102.75,
+    "throughput_rps": 4866.0
+  }
+}
