@@ -1,0 +1,21 @@
+{
+  "dataset_rows": 1200000,
+  "dataset_cols": 16,
+  "memory_mb_optimized": 53.79,
+  "benchmarks_ms": {
+    "GroupBy dept sum": 54.5,
+    "Filter Active status": 83.84,
+    "Sort by gross desc": 580.32,
+    "Vectorized: net*1.05": 21.8,
+    "NumPy mean(net)": 2.02,
+    "Rolling mean(50)": 121.19,
+    "Merge on emp_id": 200.77
+  },
+  "global_stats": {
+    "total_net_payroll": 276246036480.0,
+    "avg_net_salary": 230205.03125,
+    "min_net": 24438.810546875,
+    "max_net": 780991.5,
+    "gini_index": 0.4514
+  }
+}
