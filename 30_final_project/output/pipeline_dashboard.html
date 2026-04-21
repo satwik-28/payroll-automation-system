@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PayrollWise — Pipeline Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#090c12;--bg2:#0e1420;--bg3:#141b29;--border:#1e2b40;--text:#e8edf5;--text2:#8a9ab5;--gold:#f0b429;--green:#22c55e;--red:#ef4444;--blue:#3b82f6;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);padding:24px;}
+  h1{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);margin-bottom:4px}
+  h2{font-family:'DM Serif Display',serif;font-size:18px;color:var(--text);margin:24px 0 12px}
+  .subtitle{font-size:12px;color:var(--text2);font-family:'IBM Plex Mono',monospace;margin-bottom:24px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:28px}
+  .stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px;position:relative;overflow:hidden}
+  .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+  .s-gold::before{background:var(--gold)} .s-green::before{background:var(--green)} .s-blue::before{background:var(--blue)} .s-red::before{background:var(--red)}
+  .stat-label{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:2px;font-family:'IBM Plex Mono',monospace;margin-bottom:8px}
+  .stat-value{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600}
+  .stat-sub{font-size:11px;color:var(--text2);margin-top:4px}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px}
+  .card-head{padding:14px 18px;border-bottom:1px solid var(--border);font-weight:600;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+  table{width:100%;border-collapse:collapse}
+  th{background:var(--bg3);padding:9px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;border-bottom:1px solid var(--border)}
+  td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border)}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:var(--bg3)}
+  code{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold)}
+  .badge{display:inline-flex;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace}
+  .b-gold{background:rgba(240,180,41,.15);color:var(--gold)}
+  .b-green{background:rgba(34,197,94,.15);color:var(--green)}
+  footer{text-align:center;padding:24px;color:var(--text2);font-size:11px;font-family:'IBM Plex Mono',monospace;border-top:1px solid var(--border);margin-top:24px}
+</style>
+</head>
+<body>
+<h1>PayrollWise — Data Pipeline Dashboard</h1>
+<div class="subtitle">TASK 30 FINAL PROJECT · Generated: 2026-04-21 12:42:20 · Period: March 2026</div>
+
+<h2>Key Metrics</h2>
+<div class="stats">
+  <div class="stat s-gold"><div class="stat-label">Employees Paid</div><div class="stat-value">30</div><div class="stat-sub">Active headcount</div></div>
+  <div class="stat s-blue"><div class="stat-label">Total Gross</div><div class="stat-value">₹48.14L</div><div class="stat-sub">Payroll period</div></div>
+  <div class="stat s-green"><div class="stat-label">Total Net</div><div class="stat-value">₹40.64L</div><div class="stat-sub">Amount disbursed</div></div>
+  <div class="stat s-red"><div class="stat-label">Total TDS</div><div class="stat-value">₹6.89L</div><div class="stat-sub">Tax deducted</div></div>
+  <div class="stat s-gold"><div class="stat-label">Avg Net Salary</div><div class="stat-value">₹1.35L</div><div class="stat-sub">Per employee</div></div>
+  <div class="stat s-green"><div class="stat-label">Avg Take-Home</div><div class="stat-value">90.8%</div><div class="stat-sub">Net/Gross ratio</div></div>
+  <div class="stat s-blue"><div class="stat-label">Avg Attendance</div><div class="stat-value">93.6%</div><div class="stat-sub">Working days</div></div>
+  <div class="stat s-gold"><div class="stat-label">Total PF</div><div class="stat-value">₹54,000.00</div><div class="stat-sub">Employee contribution</div></div>
+</div>
+
+<div class="card">
+  <div class="card-head">Department-wise Payroll <span class="badge b-gold">12 Departments</span></div>
+  <table>
+    <thead><tr><th>Department</th><th>Headcount</th><th>Total Gross</th><th>Total Net</th><th>TDS</th><th>Avg Net</th></tr></thead>
+    <tbody><tr>
+                <td><b>Information Technology</b></td>
+                <td>5</td>
+                <td style="color:#22c55e">₹12.76L</td>
+                <td style="color:#f0b429">₹10.23L</td>
+                <td style="color:#ef4444">₹2.43L</td>
+                <td>₹2.05L</td>
+            </tr><tr>
+                <td><b>Research & Development</b></td>
+                <td>3</td>
+                <td style="color:#22c55e">₹7.24L</td>
+                <td style="color:#f0b429">₹6.03L</td>
+                <td style="color:#ef4444">₹1.16L</td>
+                <td>₹2.01L</td>
+            </tr><tr>
+                <td><b>Finance & Accounts</b></td>
+                <td>3</td>
+                <td style="color:#22c55e">₹7.13L</td>
+                <td style="color:#f0b429">₹5.65L</td>
+                <td style="color:#ef4444">₹1.42L</td>
+                <td>₹1.88L</td>
+            </tr><tr>
+                <td><b>Sales & Marketing</b></td>
+                <td>3</td>
+                <td style="color:#22c55e">₹4.09L</td>
+                <td style="color:#f0b429">₹3.50L</td>
+                <td style="color:#ef4444">₹53,224.83</td>
+                <td>₹1.17L</td>
+            </tr><tr>
+                <td><b>Operations</b></td>
+                <td>2</td>
+                <td style="color:#22c55e">₹4.17L</td>
+                <td style="color:#f0b429">₹3.43L</td>
+                <td style="color:#ef4444">₹69,940.67</td>
+                <td>₹1.72L</td>
+            </tr><tr>
+                <td><b>Human Resources</b></td>
+                <td>3</td>
+                <td style="color:#22c55e">₹3.00L</td>
+                <td style="color:#f0b429">₹2.70L</td>
+                <td style="color:#ef4444">₹23,870.00</td>
+                <td>₹89,926.67</td>
+            </tr><tr>
+                <td><b>Cyber Security</b></td>
+                <td>2</td>
+                <td style="color:#22c55e">₹2.40L</td>
+                <td style="color:#f0b429">₹2.22L</td>
+                <td style="color:#ef4444">₹13,885.77</td>
+                <td>₹1.11L</td>
+            </tr><tr>
+                <td><b>DevOps & Platform Eng</b></td>
+                <td>2</td>
+                <td style="color:#22c55e">₹2.34L</td>
+                <td style="color:#f0b429">₹2.17L</td>
+                <td style="color:#ef4444">₹13,351.86</td>
+                <td>₹1.09L</td>
+            </tr><tr>
+                <td><b>Data Science & Analytics</b></td>
+                <td>2</td>
+                <td style="color:#22c55e">₹2.31L</td>
+                <td style="color:#f0b429">₹2.15L</td>
+                <td style="color:#ef4444">₹12,613.89</td>
+                <td>₹1.07L</td>
+            </tr><tr>
+                <td><b>Quality Assurance</b></td>
+                <td>2</td>
+                <td style="color:#22c55e">₹1.40L</td>
+                <td style="color:#f0b429">₹1.34L</td>
+                <td style="color:#ef4444">₹2,224.33</td>
+                <td>₹66,922.83</td>
+            </tr><tr>
+                <td><b>Customer Support</b></td>
+                <td>2</td>
+                <td style="color:#22c55e">₹78,350.00</td>
+                <td style="color:#f0b429">₹74,350.00</td>
+                <td style="color:#ef4444">₹0.00</td>
+                <td>₹37,175.00</td>
+            </tr><tr>
+                <td><b>Corporate Strategy</b></td>
+                <td>1</td>
+                <td style="color:#22c55e">₹50,744.44</td>
+                <td style="color:#f0b429">₹48,744.44</td>
+                <td style="color:#ef4444">₹0.00</td>
+                <td>₹48,744.44</td>
+            </tr></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-head">Top Earners — March 2026</div>
+  <table>
+    <thead><tr><th>Code</th><th>Employee</th><th>Department</th><th>Gross</th><th>Net Salary</th><th>Take-Home %</th><th>Attendance %</th></tr></thead>
+    <tbody><tr>
+                <td><code>EMP024</code></td>
+                <td>Lakshmi Prasad</td>
+                <td>Information Technology</td>
+                <td style="text-align:right">₹7.93L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹5.89L</b></td>
+                <td style="text-align:right">74.29%</td>
+                <td style="text-align:right">96.3%</td>
+            </tr><tr>
+                <td><code>EMP023</code></td>
+                <td>Dinesh Sharma</td>
+                <td>Finance & Accounts</td>
+                <td style="text-align:right">₹5.83L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹4.42L</b></td>
+                <td style="text-align:right">75.84%</td>
+                <td style="text-align:right">96.3%</td>
+            </tr><tr>
+                <td><code>EMP030</code></td>
+                <td>Divya Mohan</td>
+                <td>Research & Development</td>
+                <td style="text-align:right">₹4.21L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹3.29L</b></td>
+                <td style="text-align:right">78.08%</td>
+                <td style="text-align:right">88.9%</td>
+            </tr><tr>
+                <td><code>EMP017</code></td>
+                <td>Manoj Tiwari</td>
+                <td>Operations</td>
+                <td style="text-align:right">₹3.51L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹2.80L</b></td>
+                <td style="text-align:right">79.69%</td>
+                <td style="text-align:right">96.3%</td>
+            </tr><tr>
+                <td><code>EMP013</code></td>
+                <td>Kiran Rao</td>
+                <td>Sales & Marketing</td>
+                <td style="text-align:right">₹2.97L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹2.42L</b></td>
+                <td style="text-align:right">81.46%</td>
+                <td style="text-align:right">92.6%</td>
+            </tr><tr>
+                <td><code>EMP011</code></td>
+                <td>Arjun Mehta</td>
+                <td>Information Technology</td>
+                <td style="text-align:right">₹2.13L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹1.83L</b></td>
+                <td style="text-align:right">85.97%</td>
+                <td style="text-align:right">92.6%</td>
+            </tr><tr>
+                <td><code>EMP002</code></td>
+                <td>Priya Sharma</td>
+                <td>Human Resources</td>
+                <td style="text-align:right">₹1.98L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹1.72L</b></td>
+                <td style="text-align:right">87.17%</td>
+                <td style="text-align:right">92.6%</td>
+            </tr><tr>
+                <td><code>EMP010</code></td>
+                <td>Deepa Joshi</td>
+                <td>Research & Development</td>
+                <td style="text-align:right">₹1.52L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹1.37L</b></td>
+                <td style="text-align:right">90.33%</td>
+                <td style="text-align:right">100.0%</td>
+            </tr><tr>
+                <td><code>EMP018</code></td>
+                <td>Anjali Bose</td>
+                <td>Research & Development</td>
+                <td style="text-align:right">₹1.51L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹1.37L</b></td>
+                <td style="text-align:right">90.4%</td>
+                <td style="text-align:right">92.6%</td>
+            </tr><tr>
+                <td><code>EMP027</code></td>
+                <td>Gaurav Khanna</td>
+                <td>DevOps & Platform Eng</td>
+                <td style="text-align:right">₹1.37L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹1.25L</b></td>
+                <td style="text-align:right">91.5%</td>
+                <td style="text-align:right">88.9%</td>
+            </tr><tr>
+                <td><code>EMP007</code></td>
+                <td>Rohit Gupta</td>
+                <td>Information Technology</td>
+                <td style="text-align:right">₹1.36L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹1.24L</b></td>
+                <td style="text-align:right">91.56%</td>
+                <td style="text-align:right">96.3%</td>
+            </tr><tr>
+                <td><code>EMP029</code></td>
+                <td>Naveen Reddy</td>
+                <td>Cyber Security</td>
+                <td style="text-align:right">₹1.31L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹1.20L</b></td>
+                <td style="text-align:right">91.92%</td>
+                <td style="text-align:right">88.9%</td>
+            </tr><tr>
+                <td><code>EMP020</code></td>
+                <td>Meena Krishnan</td>
+                <td>Data Science & Analytics</td>
+                <td style="text-align:right">₹1.28L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹1.18L</b></td>
+                <td style="text-align:right">92.07%</td>
+                <td style="text-align:right">92.6%</td>
+            </tr><tr>
+                <td><code>EMP019</code></td>
+                <td>Suresh Pillai</td>
+                <td>Cyber Security</td>
+                <td style="text-align:right">₹1.09L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹1.02L</b></td>
+                <td style="text-align:right">93.29%</td>
+                <td style="text-align:right">92.6%</td>
+            </tr><tr>
+                <td><code>EMP008</code></td>
+                <td>Kavitha Menon</td>
+                <td>Data Science & Analytics</td>
+                <td style="text-align:right">₹1.03L</td>
+                <td style="text-align:right;color:#22c55e"><b>₹97,016.67</b></td>
+                <td style="text-align:right">93.74%</td>
+                <td style="text-align:right">88.9%</td>
+            </tr></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-head">Pipeline Execution Summary <span class="badge b-green">Total: 74ms</span></div>
+  <table>
+    <thead><tr><th>Stage</th><th>Status</th><th>Duration</th><th>Records</th></tr></thead>
+    <tbody><tr>
+                <td>ingest_db</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">30.23 ms</td>
+                <td style="text-align:right">133</td>
+            </tr><tr>
+                <td>ingest_csv</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">0.0 ms</td>
+                <td style="text-align:right">2</td>
+            </tr><tr>
+                <td>ingest_api</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">2.02 ms</td>
+                <td style="text-align:right">25</td>
+            </tr><tr>
+                <td>clean_validate</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">0.0 ms</td>
+                <td style="text-align:right">30</td>
+            </tr><tr>
+                <td>transform_enrich</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">0.0 ms</td>
+                <td style="text-align:right">30</td>
+            </tr><tr>
+                <td>aggregate</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">0.0 ms</td>
+                <td style="text-align:right">30</td>
+            </tr><tr>
+                <td>write_dw</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">21.82 ms</td>
+                <td style="text-align:right">30</td>
+            </tr><tr>
+                <td>export_csv</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">6.97 ms</td>
+                <td style="text-align:right">30</td>
+            </tr><tr>
+                <td>cloud_archive</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">7.04 ms</td>
+                <td style="text-align:right">30</td>
+            </tr><tr>
+                <td>sla_check</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">0.0 ms</td>
+                <td style="text-align:right">0</td>
+            </tr><tr>
+                <td>notifications</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">3.58 ms</td>
+                <td style="text-align:right">4</td>
+            </tr><tr>
+                <td>monitoring</td>
+                <td style="color:#22c55e">
+                    ✓ SUCCESS</td>
+                <td style="text-align:right">0.0 ms</td>
+                <td style="text-align:right">0</td>
+            </tr><tr>
+                <td>dashboard</td>
+                <td style="color:#ef4444">
+                    ✗ RUNNING</td>
+                <td style="text-align:right">— ms</td>
+                <td style="text-align:right">—</td>
+            </tr></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-head">Data Engineering Stack</div>
+  <table>
+    <thead><tr><th>Task</th><th>Technology</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Task 01</td><td>Linux + Shell</td><td>Directory setup, file permissions, automation</td></tr>
+      <tr><td>Task 02</td><td>HTTP/FTP/TLS</td><td>API simulation, packet capture, secure data flow</td></tr>
+      <tr><td>Task 03</td><td>Python CSV</td><td>Multi-file CSV ingestion, cleaning, merging</td></tr>
+      <tr><td>Task 04</td><td>Advanced Python</td><td>Normalization, aggregation, validation modules</td></tr>
+      <tr><td>Task 05</td><td>Pandas + NumPy</td><td>1M+ row analysis, memory optimization</td></tr>
+      <tr><td>Task 06-07</td><td>SQLite SQL</td><td>Queries, joins, window functions, CTEs</td></tr>
+      <tr><td>Task 08</td><td>OLTP vs OLAP</td><td>Schema design and use-case comparison</td></tr>
+      <tr><td>Task 09</td><td>Star Schema</td><td>Data warehouse with fact + dimension tables</td></tr>
+      <tr><td>Task 10</td><td>ETL vs ELT</td><td>Both pipelines implemented and benchmarked</td></tr>
+      <tr><td>Task 11</td><td>Batch Ingestion</td><td>Chunked CSV→DB pipeline with checkpointing</td></tr>
+      <tr><td>Task 12-13</td><td>HDFS Simulation</td><td>Namenode/Datanode, replication, block storage</td></tr>
+      <tr><td>Task 14-17</td><td>Spark Simulation</td><td>RDD, DataFrame, SQL, partitioning, caching</td></tr>
+      <tr><td>Task 18-21</td><td>Kafka Streaming</td><td>Producer/consumer, offsets, micro-batches</td></tr>
+      <tr><td>Task 22-23</td><td>Airflow Simulation</td><td>DAG, scheduling, retry, SLA monitoring</td></tr>
+      <tr><td>Task 24</td><td>AWS/GCP/Azure</td><td>Cloud services comparison for payroll</td></tr>
+      <tr><td>Task 25</td><td>S3 Simulation</td><td>Object storage, versioning, lifecycle, presigned URLs</td></tr>
+      <tr><td>Task 26</td><td>EC2 Simulation</td><td>Instance lifecycle, CI/CD deployment pipeline</td></tr>
+      <tr><td>Task 27</td><td>BigQuery/Redshift</td><td>Cloud DW analytical queries and cost analysis</td></tr>
+      <tr><td>Task 28</td><td>Delta Lake</td><td>ACID, time travel, schema evolution, vacuum</td></tr>
+      <tr><td>Task 29</td><td>Data Quality</td><td>Checks, anomaly detection, DQ scoring</td></tr>
+      <tr><td>Task 30</td><td>Full Pipeline</td><td>End-to-end: ingest→process→store→orchestrate→dashboard</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>PayrollWise Data Engineering System · 30 Tasks Completed · SQLite + Python + Simulation Stack</footer>
+</body>
+</html>

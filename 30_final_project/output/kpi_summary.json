@@ -1,0 +1,126 @@
+{
+  "period": "March 2026",
+  "total_employees": 30,
+  "total_gross": 4813608.87,
+  "total_net": 4064189.86,
+  "total_pf_emp": 54000.0,
+  "total_esi_emp": 0.0,
+  "total_tds": 689419.01,
+  "total_deductions": 749419.01,
+  "avg_net": 135473.0,
+  "avg_gross": 160453.63,
+  "max_net": 588986.11,
+  "min_net": 35050.0,
+  "avg_take_home": 90.85,
+  "avg_attendance": 93.59,
+  "dept_breakdown": {
+    "Human Resources": {
+      "count": 3,
+      "gross": 299650.0,
+      "net": 269780.0,
+      "tds": 23870.0,
+      "pf": 5400.0,
+      "avg_net": 89926.67
+    },
+    "Information Technology": {
+      "count": 5,
+      "gross": 1276234.81,
+      "net": 1023400.07,
+      "tds": 242834.74000000002,
+      "pf": 9000.0,
+      "avg_net": 204680.01
+    },
+    "Customer Support": {
+      "count": 2,
+      "gross": 78350.0,
+      "net": 74350.0,
+      "tds": 0.0,
+      "pf": 3600.0,
+      "avg_net": 37175.0
+    },
+    "Sales & Marketing": {
+      "count": 3,
+      "gross": 408941.1,
+      "net": 349716.26999999996,
+      "tds": 53224.83,
+      "pf": 5400.0,
+      "avg_net": 116572.09
+    },
+    "Finance & Accounts": {
+      "count": 3,
+      "gross": 712546.66,
+      "net": 564595.33,
+      "tds": 141951.33,
+      "pf": 5400.0,
+      "avg_net": 188198.44
+    },
+    "Data Science & Analytics": {
+      "count": 2,
+      "gross": 231314.82,
+      "net": 214700.93,
+      "tds": 12613.89,
+      "pf": 3600.0,
+      "avg_net": 107350.46
+    },
+    "Operations": {
+      "count": 2,
+      "gross": 417202.23,
+      "net": 343261.56,
+      "tds": 69940.67,
+      "pf": 3600.0,
+      "avg_net": 171630.78
+    },
+    "Research & Development": {
+      "count": 3,
+      "gross": 724334.81,
+      "net": 602813.22,
+      "tds": 115521.59,
+      "pf": 5400.0,
+      "avg_net": 200937.74
+    },
+    "Quality Assurance": {
+      "count": 2,
+      "gross": 140070.0,
+      "net": 133845.66999999998,
+      "tds": 2224.33,
+      "pf": 3600.0,
+      "avg_net": 66922.83
+    },
+    "DevOps & Platform Eng": {
+      "count": 2,
+      "gross": 234425.93,
+      "net": 217074.07,
+      "tds": 13351.86,
+      "pf": 3600.0,
+      "avg_net": 108537.04
+    },
+    "Cyber Security": {
+      "count": 2,
+      "gross": 239794.07,
+      "net": 221908.3,
+      "tds": 13885.77,
+      "pf": 3600.0,
+      "avg_net": 110954.15
+    },
+    "Corporate Strategy": {
+      "count": 1,
+      "gross": 50744.44,
+      "net": 48744.44,
+      "tds": 0.0,
+      "pf": 1800.0,
+      "avg_net": 48744.44
+    }
+  },
+  "gender_breakdown": {
+    "Male": {
+      "count": 15,
+      "avg_net": 137627.33,
+      "total_net": 2064409.99
+    },
+    "Female": {
+      "count": 15,
+      "avg_net": 133318.66,
+      "total_net": 1999779.8699999999
+    }
+  }
+}

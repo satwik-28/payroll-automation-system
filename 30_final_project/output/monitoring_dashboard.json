@@ -1,0 +1,120 @@
+{
+  "last_run": "2026-04-21T12:42:20.037658",
+  "pipeline_status": "SUCCESS",
+  "stages": {
+    "ingest_db": {
+      "start": 1776755539.9639819,
+      "status": "success",
+      "end": 1776755539.9942153,
+      "duration_ms": 30.23,
+      "rows": 133,
+      "sources": [
+        "payroll",
+        "employees",
+        "attendance",
+        "loans",
+        "revisions"
+      ],
+      "rows_per_source": {
+        "payroll": 30,
+        "employees": 30,
+        "attendance": 30,
+        "loans": 21,
+        "revisions": 22
+      }
+    },
+    "ingest_csv": {
+      "start": 1776755539.9942153,
+      "status": "success",
+      "end": 1776755539.9942153,
+      "duration_ms": 0.0,
+      "rows": 2
+    },
+    "ingest_api": {
+      "start": 1776755539.9942153,
+      "status": "success",
+      "end": 1776755539.996233,
+      "duration_ms": 2.02,
+      "rows": 25
+    },
+    "clean_validate": {
+      "start": 1776755539.996233,
+      "status": "success",
+      "end": 1776755539.996233,
+      "duration_ms": 0.0,
+      "rows": 30,
+      "issues_found": 0,
+      "pass_rate_pct": 100.0
+    },
+    "transform_enrich": {
+      "start": 1776755539.996233,
+      "status": "success",
+      "end": 1776755539.996233,
+      "duration_ms": 0.0,
+      "rows": 30
+    },
+    "aggregate": {
+      "start": 1776755539.996233,
+      "status": "success",
+      "end": 1776755539.996233,
+      "duration_ms": 0.0,
+      "rows": 30
+    },
+    "write_dw": {
+      "start": 1776755539.996233,
+      "status": "success",
+      "end": 1776755540.0180507,
+      "duration_ms": 21.82,
+      "rows": 30
+    },
+    "export_csv": {
+      "start": 1776755540.0200634,
+      "status": "success",
+      "end": 1776755540.027035,
+      "duration_ms": 6.97,
+      "rows": 30
+    },
+    "cloud_archive": {
+      "start": 1776755540.027035,
+      "status": "success",
+      "end": 1776755540.0340796,
+      "duration_ms": 7.04,
+      "rows": 30,
+      "bucket": "payrollwise-data-ap-south",
+      "key": "payroll/archive/March-2026/payroll_records.json",
+      "size_bytes": 40504,
+      "etag": "3af50e9a8e8b6fb4c1e28b3575be8e98",
+      "url": "s3://payrollwise-data-ap-south/payroll/archive/March-2026/payroll_records.json",
+      "storage_class": "STANDARD_IA",
+      "encrypted": true,
+      "checksum_sha256": "c659e7cd6104f26e"
+    },
+    "sla_check": {
+      "start": 1776755540.0340796,
+      "status": "success",
+      "end": 1776755540.0340796,
+      "duration_ms": 0.0,
+      "rows": 0,
+      "sla_met": true,
+      "violations": [],
+      "pipeline_time_ms": 70.1,
+      "stages_succeeded": 9
+    },
+    "notifications": {
+      "start": 1776755540.0340796,
+      "status": "success",
+      "end": 1776755540.0376587,
+      "duration_ms": 3.58,
+      "rows": 4
+    },
+    "monitoring": {
+      "start": 1776755540.0376587,
+      "status": "running"
+    }
+  },
+  "sla_met": true,
+  "uptime_pct": 99.97,
+  "avg_run_time_ms": 70.1,
+  "grafana_url": "http://monitoring.company.com/grafana/payroll",
+  "alerts": []
+}

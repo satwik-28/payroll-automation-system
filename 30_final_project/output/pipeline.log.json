@@ -1,0 +1,132 @@
+[
+  {
+    "ts": "2026-04-21T12:42:19.963981",
+    "level": "INFO",
+    "stage": "PIPELINE",
+    "message": "PayrollWise Data Pipeline v2.0 starting",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:19.994215",
+    "level": "SUCCESS",
+    "stage": "ingest_db",
+    "message": "Ingested 133 records from OLTP DB",
+    "data": {
+      "period_id": 24,
+      "tables": [
+        "payroll",
+        "employees",
+        "attendance",
+        "loans",
+        "revisions"
+      ]
+    }
+  },
+  {
+    "ts": "2026-04-21T12:42:19.994215",
+    "level": "INFO",
+    "stage": "ingest_csv",
+    "message": "Ingested 2 rows from CSV",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:19.996233",
+    "level": "INFO",
+    "stage": "ingest_api",
+    "message": "Ingested 25 API events",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:19.996233",
+    "level": "SUCCESS",
+    "stage": "clean_validate",
+    "message": "Validated 30 records: 30 clean, 0 issues",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:19.996233",
+    "level": "SUCCESS",
+    "stage": "transform_enrich",
+    "message": "Enriched 30 records with derived metrics",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:19.996233",
+    "level": "SUCCESS",
+    "stage": "aggregate",
+    "message": "KPI aggregation complete: 12 departments",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:20.018050",
+    "level": "SUCCESS",
+    "stage": "write_dw",
+    "message": "Wrote 30 records to DW",
+    "data": {
+      "db": "c:\\Users\\KIIT0001\\Desktop\\payroll_complete\\30_final_project\\output\\pipeline_dw.db"
+    }
+  },
+  {
+    "ts": "2026-04-21T12:42:20.027035",
+    "level": "SUCCESS",
+    "stage": "export_csv",
+    "message": "Exported 3 files",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:20.034079",
+    "level": "SUCCESS",
+    "stage": "cloud_archive",
+    "message": "Archived 40504 bytes to s3://payrollwise-data-ap-south/payroll/archive/March-2026/payroll_records.json",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:20.034079",
+    "level": "SUCCESS",
+    "stage": "sla_check",
+    "message": "SLA MET: All checks passed",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:20.034079",
+    "level": "INFO",
+    "stage": "notifications",
+    "message": "Sent to email\u2192ceo@company.com: PAYROLL COMPLETE: March 2026 processed for 30 employees",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:20.036582",
+    "level": "INFO",
+    "stage": "notifications",
+    "message": "Sent to email\u2192payroll@company.com: PAYROLL COMPLETE: March 2026 processed for 30 employees\nTOTA",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:20.036582",
+    "level": "INFO",
+    "stage": "notifications",
+    "message": "Sent to slack\u2192#payroll-alerts: PAYROLL COMPLETE: March 2026 processed for 30 employees",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:20.037658",
+    "level": "INFO",
+    "stage": "notifications",
+    "message": "Sent to sms\u2192HR-Manager: Payroll done: \u20b94,064,190 for 30 emp",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:20.037658",
+    "level": "SUCCESS",
+    "stage": "monitoring",
+    "message": "Dashboard updated: monitoring_dashboard.json",
+    "data": {}
+  },
+  {
+    "ts": "2026-04-21T12:42:20.044542",
+    "level": "SUCCESS",
+    "stage": "dashboard",
+    "message": "HTML dashboard generated: pipeline_dashboard.html",
+    "data": {}
+  }
+]
